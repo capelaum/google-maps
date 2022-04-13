@@ -1,4 +1,6 @@
+import { LocationMarker } from 'components/LocationMarker'
 import GoogleMapReact, { Coords } from 'google-map-react'
+import styles from './styles.module.scss'
 
 interface MapProps {
   center?: Coords
@@ -11,23 +13,23 @@ export function Map({ center, zoom }: MapProps) {
       lat: 42.3265,
       lng: -122.8756,
     },
-    zoom: 6,
+    zoom: 5,
   }
 
   const centerCoords = center ?? defaultProps.center
   const zoomInitial = zoom ?? defaultProps.zoom
 
-  // console.log(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY)
-
   return (
-    <div style={{ height: '100vh', width: '100%' }}>
+    <div className={styles.mapContainer}>
       <GoogleMapReact
         bootstrapURLKeys={{
           key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
         }}
         defaultCenter={centerCoords}
         defaultZoom={zoomInitial}
-      ></GoogleMapReact>
+      >
+        <LocationMarker lat={centerCoords.lat} lng={centerCoords.lng} />
+      </GoogleMapReact>
     </div>
   )
 }
