@@ -14,18 +14,6 @@ interface MapProps {
 export function Map({ center, zoom, eventData }: MapProps) {
   const [event, setEvent] = useState<NaturalEvent | null>(null)
 
-  const markers = eventData.map((event: any) => {
-    return (
-      <LocationMarker
-        key={event.id}
-        lat={event.geometries[0].coordinates[1]}
-        lng={event.geometries[0].coordinates[0]}
-        category={event.categories[0].title}
-        onClick={() => setEvent(event)}
-      />
-    )
-  })
-
   const defaultProps = {
     center: {
       lat: 42.3265,
@@ -37,6 +25,22 @@ export function Map({ center, zoom, eventData }: MapProps) {
   const centerCoords = center ?? defaultProps.center
   const zoomInitial = zoom ?? defaultProps.zoom
 
+  const markers = eventData.map((event: NaturalEvent) => {
+    const locations = event.geometries.map((location) => {
+      return (
+        <LocationMarker
+          key={event.id}
+          lat={location.coordinates[1]}
+          lng={location.coordinates[0]}
+          category={event.categories[0].title}
+          onClick={() => setEvent(event)}
+        />
+      )
+    })
+
+    return locations
+  })
+
   return (
     <div className={styles.mapContainer}>
       <GoogleMapReact
@@ -45,6 +49,7 @@ export function Map({ center, zoom, eventData }: MapProps) {
         }}
         defaultCenter={centerCoords}
         defaultZoom={zoomInitial}
+        yesIWantToUseGoogleMapApiInternals
       >
         {markers}
       </GoogleMapReact>

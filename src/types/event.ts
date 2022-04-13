@@ -6,10 +6,7 @@ export type EventCategory = {
 export type EventGeometry = {
   date: string
   type: string
-  coordinates: {
-    lat: number
-    lng: number
-  }
+  coordinates: number[]
 }
 
 export type NaturalEvent = {
