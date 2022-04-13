@@ -1,0 +1,56 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --font-base: 'Roboto', Arial, Helvetica, sans-serif;
+
+  --color-primary: #edf2f8;
+  --color-secondary: #313bac;
+
+  --color-black: #030303;
+  --color-white: #ffffff;
+  --color-brown: #46364a;
+
+  --color-blue-900: #030518;
+
+  --color-gray-200: #e4e4e4;
+  --color-gray-400: #6b7688;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 1080px) {
+  html {
+    font-size: 93.75%;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 87.5%;
+  }
+}
+
+body {
+  font-family: var(--font-base);
+  background-color: var(--color-blue-900);
+  color: var(--color-white);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
