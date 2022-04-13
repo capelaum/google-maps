@@ -44,6 +44,8 @@ body {
   font-family: var(--font-base);
   background-color: var(--color-blue-900);
   color: var(--color-white);
+
+  overflow: hidden;
 }
 
 button {

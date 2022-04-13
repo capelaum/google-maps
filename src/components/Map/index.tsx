@@ -1,14 +1,19 @@
+import { LocationInfoBox } from 'components/LocationInfoBox'
 import { LocationMarker } from 'components/LocationMarker'
 import GoogleMapReact, { Coords } from 'google-map-react'
+import { useState } from 'react'
+import { NaturalEvent } from 'types/event'
 import styles from './styles.module.scss'
 
 interface MapProps {
   center?: Coords
   zoom?: number
-  eventData: any[]
+  eventData: NaturalEvent[]
 }
 
 export function Map({ center, zoom, eventData }: MapProps) {
+  const [event, setEvent] = useState<NaturalEvent | null>(null)
+
   const markers = eventData.map((event: any) => {
     if (event.categories[0].id === 8) {
       return (
@@ -16,6 +21,7 @@ export function Map({ center, zoom, eventData }: MapProps) {
           key={event.id}
           lat={event.geometries[0].coordinates[1]}
           lng={event.geometries[0].coordinates[0]}
+          onClick={() => setEvent(event)}
         />
       )
     }
@@ -43,6 +49,7 @@ export function Map({ center, zoom, eventData }: MapProps) {
       >
         {markers}
       </GoogleMapReact>
+      {event && <LocationInfoBox {...event} />}
     </div>
   )
 }

@@ -1,12 +1,14 @@
+import { Header } from 'components/Header'
 import { Loader } from 'components/Loader'
 import { Map } from 'components/Map'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styles from 'styles/Home.module.scss'
+import { NaturalEvent } from 'types/event'
 
 const Home: NextPage = () => {
-  const [eventData, setEventData] = useState([])
+  const [eventData, setEventData] = useState<NaturalEvent[]>([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -28,6 +30,8 @@ const Home: NextPage = () => {
         <title>Wildfire Tracker</title>
         <meta name="description" content="Wildfire Tracker" />
       </Head>
+
+      <Header />
 
       {!loading ? <Map eventData={eventData} /> : <Loader />}
     </div>
