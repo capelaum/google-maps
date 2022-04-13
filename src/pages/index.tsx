@@ -29,7 +29,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Wildfire Tracker" />
       </Head>
 
-      {!loading ? <Map /> : <Loader />}
+      {!loading ? <Map eventData={eventData} /> : <Loader />}
     </div>
   )
 }
