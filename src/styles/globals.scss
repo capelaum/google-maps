@@ -58,3 +58,19 @@ button {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.wildfires {
+  border: 3px solid red;
+}
+
+.volcanoes {
+  border: 3px solid firebrick;
+}
+
+.sea-and-lake-ice {
+  border: 3px solid blue;
+}
+
+.severe-storms {
+  border: 3px solid var(--color-blue-900);
+}

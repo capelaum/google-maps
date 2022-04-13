@@ -35,7 +35,7 @@ export function LocationMarker({
       case 'Snow':
         return <IoMdSnow size={22} color="skyblue" />
       case 'Sea and Lake Ice':
-        return <GiBigWave size={22} color="skyblue" />
+        return <GiBigWave size={22} color="blue" />
       default:
         return <FaMapMarkerAlt size={22} color="var(--color-gray-400)" />
     }

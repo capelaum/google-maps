@@ -19,8 +19,6 @@ export function Header({ eventData }: HeaderProps) {
     return acc
   }, {} as EventCategories)
 
-  console.log('🚀 ~ eventCategories', eventCategories)
-
   return (
     <header className={styles.header}>
       <div className={styles.title}>

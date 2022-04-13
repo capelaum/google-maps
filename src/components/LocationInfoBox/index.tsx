@@ -7,8 +7,13 @@ export function LocationInfoBox({
   geometries,
   categories,
 }: NaturalEvent) {
+  const category = categories[0].title.replaceAll(' ', '-').toLowerCase()
+
   return (
-    <div className={styles.locationInfoContainer}>
+    <div
+      id="locationInfoBox"
+      className={`${styles.locationInfoContainer} ${category} `}
+    >
       <h2>{title}</h2>
       <ul>
         <li>
