@@ -1,6 +1,6 @@
-import { Header } from 'components/Header'
+import { GoogleMapReactHeader } from 'components/GoogleMapReact/GoogleMapReactHeader'
+import { Map } from 'components/GoogleMapReact/Map'
 import { Loader } from 'components/Loader'
-import { Map } from 'components/Map'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Natural Events Tracker" />
       </Head>
 
-      <Header eventData={eventData} />
+      <GoogleMapReactHeader eventData={eventData} />
 
       {!loading ? <Map eventData={eventData} /> : <Loader />}
     </>

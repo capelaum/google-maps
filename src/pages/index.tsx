@@ -14,11 +14,19 @@ const Home: NextPage = () => {
 
       <h1>Home</h1>
 
-      <Button>
-        <Link href="/google-map-react">
-          <a>Google Map React</a>
-        </Link>
-      </Button>
+      <div className={styles.buttonsContainer}>
+        <Button>
+          <Link href="/google-map-react">
+            <a>Google Map React</a>
+          </Link>
+        </Button>
+
+        <Button>
+          <Link href="/@googlemaps-react-wrapper">
+            <a>@Google Map React Wrapper</a>
+          </Link>
+        </Button>
+      </div>
     </div>
   )
 }

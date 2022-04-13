@@ -1,5 +1,5 @@
-import { LocationInfoBox } from 'components/LocationInfoBox'
-import { LocationMarker } from 'components/LocationMarker'
+import { LocationInfoBox } from 'components/GoogleMapReact/LocationInfoBox'
+import { LocationMarker } from 'components/GoogleMapReact/LocationMarker'
 import GoogleMapReact, { Coords } from 'google-map-react'
 import { useState } from 'react'
 import { NaturalEvent } from 'types/event'
