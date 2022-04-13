@@ -15,16 +15,15 @@ export function Map({ center, zoom, eventData }: MapProps) {
   const [event, setEvent] = useState<NaturalEvent | null>(null)
 
   const markers = eventData.map((event: any) => {
-    if (event.categories[0].id === 8) {
-      return (
-        <LocationMarker
-          key={event.id}
-          lat={event.geometries[0].coordinates[1]}
-          lng={event.geometries[0].coordinates[0]}
-          onClick={() => setEvent(event)}
-        />
-      )
-    }
+    return (
+      <LocationMarker
+        key={event.id}
+        lat={event.geometries[0].coordinates[1]}
+        lng={event.geometries[0].coordinates[0]}
+        category={event.categories[0].title}
+        onClick={() => setEvent(event)}
+      />
+    )
   })
 
   const defaultProps = {

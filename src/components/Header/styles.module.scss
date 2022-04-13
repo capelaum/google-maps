@@ -1,14 +1,47 @@
 .header {
   width: 100%;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   padding: 10px;
-  background-color: firebrick;
+  background-color: var(--coloorr-blue-900);
 
   text-align: center;
+}
+
+.title {
+  display: flex;
+  align-items: center;
 
   h1 {
+    padding-left: 1rem;
     font-size: 1.5rem;
     font-weight: 500;
     color: white;
+  }
+}
+
+.info {
+  display: flex;
+  align-items: center;
+
+  h2 {
+    padding-left: 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: white;
+  }
+
+  ul {
+    display: flex;
+    align-items: center;
+
+    li {
+      list-style: none;
+
+      padding-right: 1rem;
+    }
   }
 }

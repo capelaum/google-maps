@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Wildfire Tracker" />
       </Head>
 
-      <Header />
+      <Header eventData={eventData} />
 
       {!loading ? <Map eventData={eventData} /> : <Loader />}
     </div>
