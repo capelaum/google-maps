@@ -28,7 +28,7 @@ export default function Map() {
   // const center = useMemo<LatLngLiteral>(() => ({ lat: 43, lng: -80 }), [])
   const options = useMemo<MapOptions>(
     () => ({
-      mapId: '2a64e534ec5b7704',
+      mapId: '57293b7a8495c116',
       disableDefaultUI: true,
       zoomControl: true,
       clickableIcons: false,

@@ -25,20 +25,30 @@
     color: var(--color-pink-500);
   }
 
-  button {
-    color: #fff;
-    text-decoration: none;
+  h3 {
+    margin-bottom: 1rem;
     font-size: 1.125rem;
-
-    border-radius: 5px;
-
-    padding: 0.5rem 0.75rem;
-    background-color: var(--color-pink-500);
-
-    transition: all 0.3s;
-
-    &:hover {
-      background-color: var(--color-pink-600);
-    }
   }
+
+  strong {
+    font-size: 1.125rem;
+    color: var(--color-pink-500);
+    margin-bottom: 0.5rem;
+  }
+
+  span {
+    margin-bottom: 1rem;
+  }
+}
+
+.clearButton {
+  margin-top: 1rem;
+}
+
+.buttonContainer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  margin: 0.5rem;
 }

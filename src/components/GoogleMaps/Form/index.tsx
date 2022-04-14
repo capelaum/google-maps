@@ -1,3 +1,5 @@
+import { Button } from 'components/Button'
+import Link from 'next/link'
 import { LatLng, LatLngLiteral } from 'types/googleMaps'
 import styles from './styles.module.scss'
 
@@ -51,15 +53,26 @@ export function Form({
         }
       />
 
-      <h3>{location ? 'Click on map to add markers' : 'Location'}</h3>
+      <h3>{location ? 'Marker' : 'Click on map to add markers'}</h3>
 
       {location && (
-        <pre key={`${location}`}>
-          {JSON.stringify(location.toJSON(), null, 2)}
-        </pre>
+        <>
+          <strong>Latitude</strong>
+          <span>{location.lat()}</span>
+          <strong>Longitude</strong>
+          <span>{location.lng()}</span>
+        </>
       )}
 
-      <button onClick={() => setLocation(null)}>Clear</button>
+      <Button onClick={() => setLocation(null)} className={styles.clearButton}>
+        Clear
+      </Button>
+
+      <div className={styles.buttonContainer}>
+        <Button>
+          <Link href="/">Voltar</Link>
+        </Button>
+      </div>
     </div>
   )
 }
