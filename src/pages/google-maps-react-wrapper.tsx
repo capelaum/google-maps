@@ -4,13 +4,14 @@ import { Form } from 'components/GoogleMaps/Form'
 import { Map } from 'components/GoogleMaps/Map'
 import { Marker } from 'components/GoogleMaps/Marker'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import styles from 'styles/googleWrapper.module.scss'
 import {
   GoogleMapsMap,
   LatLng,
   LatLngLiteral,
   MapMouseEvent,
+  MapOptions,
 } from 'types/googleMaps'
 
 const render = (status: Status) => {
@@ -18,15 +19,25 @@ const render = (status: Status) => {
 }
 
 export default function App() {
-  const [clicks, setClicks] = useState<LatLng[]>([])
+  const [location, setLocation] = useState<LatLng | null>(null)
   const [zoom, setZoom] = useState(3) // initial zoom
   const [center, setCenter] = useState<LatLngLiteral>({
     lat: 0,
     lng: 0,
   })
 
+  const options = useMemo<MapOptions>(
+    () => ({
+      mapId: '2a64e534ec5b7704',
+      disableDefaultUI: true,
+      zoomControl: true,
+      clickableIcons: false,
+    }),
+    []
+  )
+
   const onClick = (e: MapMouseEvent) => {
-    setClicks([...clicks, e.latLng!])
+    setLocation(e.latLng!)
   }
 
   const onIdle = (m: GoogleMapsMap) => {
@@ -42,19 +53,17 @@ export default function App() {
         render={render}
       >
         <Map center={center} onClick={onClick} onIdle={onIdle} zoom={zoom}>
-          {clicks.map((latLng, i) => (
-            <Marker key={i} position={latLng} />
-          ))}
+          {location && <Marker key={`${location}`} position={location} />}
         </Map>
       </Wrapper>
 
       <Form
         zoom={zoom}
         center={center}
-        clicks={clicks}
+        location={location}
         setZoom={setZoom}
         setCenter={setCenter}
-        setClicks={setClicks}
+        setLocation={setLocation}
       />
 
       <div className={styles.buttonContainer}>

@@ -10,3 +10,8 @@ export type MapMouseEvent = google.maps.MapMouseEvent
 
 export type MarkerOptions = google.maps.MarkerOptions
 export type MarkerType = google.maps.Marker
+
+export type Location = {
+  position: LatLngLiteral
+  description: string
+}

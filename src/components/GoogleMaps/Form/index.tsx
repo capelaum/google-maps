@@ -4,19 +4,19 @@ import styles from './styles.module.scss'
 interface FormProps {
   zoom: number
   center: LatLngLiteral
-  clicks: LatLng[]
+  location: LatLng | null
   setZoom: (zoom: number) => void
   setCenter: (center: LatLngLiteral) => void
-  setClicks: (clicks: LatLng[]) => void
+  setLocation: (location: LatLng | null) => void
 }
 
 export function Form({
   zoom,
   center,
-  clicks,
+  location,
   setZoom,
   setCenter,
-  setClicks,
+  setLocation,
 }: FormProps) {
   return (
     <div className={styles.form}>
@@ -51,12 +51,15 @@ export function Form({
         }
       />
 
-      <h3>{clicks.length === 0 ? 'Click on map to add markers' : 'Clicks'}</h3>
-      {clicks.map((latLng, i) => (
-        <pre key={i}>{JSON.stringify(latLng.toJSON(), null, 2)}</pre>
-      ))}
+      <h3>{location ? 'Click on map to add markers' : 'Location'}</h3>
 
-      <button onClick={() => setClicks([])}>Clear</button>
+      {location && (
+        <pre key={`${location}`}>
+          {JSON.stringify(location.toJSON(), null, 2)}
+        </pre>
+      )}
+
+      <button onClick={() => setLocation(null)}>Clear</button>
     </div>
   )
 }

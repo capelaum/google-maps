@@ -8,10 +8,10 @@
   padding: 1rem;
   background: var(--color-blue-500);
   color: #fff;
-}
 
-.controls input {
-  border: none;
+  input {
+    border: none;
+  }
 }
 
 .map {
@@ -31,7 +31,28 @@
   font-weight: bold;
 }
 
-.combobox-input {
+.comboboxInput {
   width: 100%;
   padding: 0.5rem;
+  margin-top: 1rem;
+}
+
+.comboboxList {
+  list-style-type: none;
+}
+
+.comboboxOption {
+  background-color: var(--color-gray-200);
+  color: black;
+}
+
+.marker {
+  padding: 0.5rem;
+
+  width: 200px;
+
+  border-radius: 5px;
+
+  background-color: #fff;
+  color: black;
 }
