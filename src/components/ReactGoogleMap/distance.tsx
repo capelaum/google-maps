@@ -37,21 +37,15 @@ export default function Distance({ leg }: DistanceProps) {
       </ul>
 
       <p>
-        Em um ano:
-        <ul>
-          <li>
-            <span className={styles.highlight}>{days} dias</span> dentro carro
-          </li>
-          <li>
-            Custo:{' '}
-            <span className={styles.highlight}>
-              {new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-              }).format(cost)}
-            </span>
-          </li>
-        </ul>
+        Em um ano você passaria{' '}
+        <span className={styles.highlight}>{days} dias</span> dentro do carro
+        por um custo de{' '}
+        <span className={styles.highlight}>
+          {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(cost)}
+        </span>
       </p>
     </div>
   )

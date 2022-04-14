@@ -13,10 +13,10 @@ import usePlacesAutocomplete, {
 import styles from './styles.module.scss'
 
 type PlacesProps = {
-  setLocation: (location: Location) => void
+  handleSetLocation: (location: Location) => void
 }
 
-export default function Places({ setLocation }: PlacesProps) {
+export default function Places({ handleSetLocation }: PlacesProps) {
   const {
     ready,
     value,
@@ -30,9 +30,9 @@ export default function Places({ setLocation }: PlacesProps) {
     clearSuggestions()
 
     const results = await getGeocode({ address })
-    const { lat, lng } = await getLatLng(results[0])
+    const position = await getLatLng(results[0])
 
-    setLocation({ position: { lat, lng }, description: address })
+    handleSetLocation({ position, description: address })
   }
 
   return (

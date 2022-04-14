@@ -13,8 +13,7 @@ import {
   Location,
   MapOptions,
 } from 'types/googleMaps'
-import Distance from './distance'
-import Places from './places'
+import { Sidebar } from './Sidebar'
 import styles from './styles.module.scss'
 import {
   closeOptions,
@@ -24,13 +23,14 @@ import {
 } from './utils/map'
 
 export default function Map() {
+  const [directions, setDirections] = useState<DirectionsResult>()
+  const [location, setLocation] = useState<Location>()
+  const [showOverlay, setShowOverlay] = useState(false)
   const [center, setCenter] = useState<LatLngLiteral>({
     lat: -15.79,
     lng: -47.88,
   })
-  const [directions, setDirections] = useState<DirectionsResult>()
-  const [location, setLocation] = useState<Location>()
-  const [showOverlay, setShowOverlay] = useState(false)
+
   const mapRef = useRef<GoogleMap>()
 
   // const center = useMemo<LatLngLiteral>(() => ({ lat: 43, lng: -80 }), [])
@@ -43,6 +43,13 @@ export default function Map() {
     }),
     []
   )
+
+  const handleSetLocation = useCallback((location: Location) => {
+    if (location) {
+      setLocation(location)
+      mapRef.current?.panTo(location.position)
+    }
+  }, [])
 
   useEffect(() => {
     if (location) {
@@ -79,18 +86,8 @@ export default function Map() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.controls}>
-        <h1>Trajeto</h1>
-        <Places
-          setLocation={(location) => {
-            setLocation(location)
-            mapRef.current?.panTo(location.position)
-          }}
-        />
-        {!location && <p>Enter the address of your destination</p>}
+      <Sidebar handleSetLocation={handleSetLocation} directions={directions} />
 
-        {directions && <Distance leg={directions.routes[0].legs[0]} />}
-      </div>
       <div className={styles.map}>
         <GoogleMap
           zoom={14}
@@ -119,7 +116,6 @@ export default function Map() {
                 position={location.position}
                 icon={'/marker.png'}
                 onClick={toggleOverlay}
-                onMouseOut={() => setShowOverlay(false)}
               />
 
               <MarkerClusterer>
