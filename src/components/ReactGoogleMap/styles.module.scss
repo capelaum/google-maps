@@ -26,15 +26,13 @@
   height: 100vh;
 }
 
-.highlight {
-  font-size: 1.25rem;
-  font-weight: bold;
-}
-
 .comboboxInput {
   width: 100%;
   padding: 0.5rem;
   margin-top: 1rem;
+
+  background-color: var(--color-blue-400);
+  color: white;
 }
 
 .comboboxList {
@@ -44,6 +42,13 @@
 .comboboxOption {
   background-color: var(--color-gray-200);
   color: black;
+  cursor: pointer;
+  padding: 0.5rem;
+
+  &:hover {
+    background-color: var(--color-light-blue-500);
+    color: white;
+  }
 }
 
 .marker {
@@ -55,4 +60,17 @@
 
   background-color: #fff;
   color: black;
+}
+
+.highlight {
+  font-size: 1.1rem;
+  font-weight: bold;
+
+  color: var(--color-pink-500);
+}
+
+.distanceContainer {
+  p {
+    margin-top: 1rem;
+  }
 }

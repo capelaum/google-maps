@@ -13,6 +13,7 @@ import {
   Location,
   MapOptions,
 } from 'types/googleMaps'
+import Distance from './distance'
 import Places from './places'
 import styles from './styles.module.scss'
 import {
@@ -23,12 +24,12 @@ import {
 } from './utils/map'
 
 export default function Map() {
-  const [center, setCenter] = useState<LatLngLiteral>({ lat: 43, lng: -80 })
-  const [directions, setDirections] = useState<DirectionsResult>()
-  const [location, setLocation] = useState<Location>({
-    position: center,
-    description: '',
+  const [center, setCenter] = useState<LatLngLiteral>({
+    lat: -15.79,
+    lng: -47.88,
   })
+  const [directions, setDirections] = useState<DirectionsResult>()
+  const [location, setLocation] = useState<Location>()
   const [showOverlay, setShowOverlay] = useState(false)
   const mapRef = useRef<GoogleMap>()
 
@@ -79,17 +80,20 @@ export default function Map() {
   return (
     <div className={styles.container}>
       <div className={styles.controls}>
-        <h1>Commute?</h1>
+        <h1>Trajeto</h1>
         <Places
           setLocation={(location) => {
             setLocation(location)
             mapRef.current?.panTo(location.position)
           }}
         />
+        {!location && <p>Enter the address of your destination</p>}
+
+        {directions && <Distance leg={directions.routes[0].legs[0]} />}
       </div>
       <div className={styles.map}>
         <GoogleMap
-          zoom={10}
+          zoom={14}
           center={center}
           mapContainerClassName={styles.mapContainer}
           options={options}
@@ -147,17 +151,17 @@ export default function Map() {
 
               <Circle
                 center={location.position}
-                radius={15000}
+                radius={1500}
                 options={closeOptions}
               />
               <Circle
                 center={location.position}
-                radius={30000}
+                radius={3000}
                 options={middleOptions}
               />
               <Circle
                 center={location.position}
-                radius={45000}
+                radius={4500}
                 options={farOptions}
               />
             </>

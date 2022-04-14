@@ -9,8 +9,15 @@
 :root {
   --font-base: 'Roboto', Arial, Helvetica, sans-serif;
 
-  --color-primary: #edf2f8;
-  --color-secondary: #313bac;
+  --color-light-blue-100: #d6d8ee;
+  --color-light-blue-200: #adb1de;
+  --color-light-blue-300: #8389cd;
+  --color-light-blue-400: #5a62bd;
+  --color-light-blue-500: #313bac;
+  --color-light-blue-600: #272f8a;
+  --color-light-blue-700: #1d2367;
+  --color-light-blue-800: #141845;
+  --color-light-blue-900: #0a0c22;
 
   --color-black: #030303;
   --color-white: #ffffff;
@@ -84,4 +91,24 @@ button {
 
 .severe-storms {
   border: 3px solid var(--color-blue-500);
+}
+
+li {
+  list-style: none;
+}
+
+input {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+
+  background-color: var(--color-blue-400);
+  color: white;
+
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
 }
