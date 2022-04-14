@@ -1,6 +1,8 @@
+import { Button } from 'components/Button'
+import Link from 'next/link'
 import { DirectionsResult, Location } from 'types/googleMaps'
-import Distance from './distance'
-import Places from './places'
+import Distance from './Distance'
+import Places from './Places'
 import styles from './styles.module.scss'
 
 interface SidebarProps {
@@ -16,6 +18,12 @@ export function Sidebar({ handleSetLocation, directions }: SidebarProps) {
       {!location && <p>Enter the address of your destination</p>}
 
       {directions && <Distance leg={directions.routes[0].legs[0]} />}
+
+      <div className={styles.buttonContainer}>
+        <Button>
+          <Link href="/">Voltar</Link>
+        </Button>
+      </div>
     </div>
   )
 }
