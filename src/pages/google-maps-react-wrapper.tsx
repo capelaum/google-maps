@@ -3,6 +3,7 @@ import { Button } from 'components/Button'
 import { Form } from 'components/GoogleMaps/Form'
 import { Map } from 'components/GoogleMaps/Map'
 import { Marker } from 'components/GoogleMaps/Marker'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import styles from 'styles/googleWrapper.module.scss'
@@ -48,11 +49,21 @@ export default function App() {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>Google Maps Wrapper</title>
+        <meta name="description" content="Google Maps Wrapper" />
+      </Head>
       <Wrapper
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
         render={render}
       >
-        <Map center={center} onClick={onClick} onIdle={onIdle} zoom={zoom}>
+        <Map
+          center={center}
+          onClick={onClick}
+          onIdle={onIdle}
+          zoom={zoom}
+          mapId="2a64e534ec5b7704"
+        >
           {location && <Marker key={`${location}`} position={location} />}
         </Map>
       </Wrapper>
