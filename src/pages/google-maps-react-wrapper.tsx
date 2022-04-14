@@ -3,6 +3,7 @@ import { Form } from 'components/GoogleMaps/Form'
 import { Map } from 'components/GoogleMaps/Map'
 import { Marker } from 'components/GoogleMaps/Marker'
 import { useState } from 'react'
+import styles from 'styles/googleWrapper.module.scss'
 
 const render = (status: Status) => {
   return <h1>{status}</h1>
@@ -27,24 +28,12 @@ export default function App() {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        height: '100%',
-        width: '100%',
-      }}
-    >
+    <div className={styles.container}>
       <Wrapper
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
         render={render}
       >
-        <Map
-          center={center}
-          onClick={onClick}
-          onIdle={onIdle}
-          zoom={zoom}
-          style={{ flexGrow: '1', height: '100vh', border: '1px solid green' }}
-        >
+        <Map center={center} onClick={onClick} onIdle={onIdle} zoom={zoom}>
           {clicks.map((latLng, i) => (
             <Marker key={i} position={latLng} />
           ))}

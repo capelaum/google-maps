@@ -1,63 +1,25 @@
-import { isLatLngLiteral } from '@googlemaps/typescript-guards'
-import { createCustomEqual } from 'fast-equals'
 import {
   Children,
   cloneElement,
-  EffectCallback,
   isValidElement,
   ReactNode,
   useEffect,
   useRef,
   useState,
 } from 'react'
+import { useDeepCompareEffectForMaps } from '../utils/deepCompare'
+import styles from './styles.module.scss'
 
 interface MapProps extends google.maps.MapOptions {
-  style: { [key: string]: string }
   onClick?: (e: google.maps.MapMouseEvent) => void
   onIdle?: (map: google.maps.Map) => void
   children: ReactNode
-}
-
-const deepCompareEqualsForMaps = createCustomEqual(
-  (deepEqual) => (a: any, b: any) => {
-    if (
-      isLatLngLiteral(a) ||
-      a instanceof google.maps.LatLng ||
-      isLatLngLiteral(b) ||
-      b instanceof google.maps.LatLng
-    ) {
-      return new google.maps.LatLng(a).equals(new google.maps.LatLng(b))
-    }
-
-    // TODO extend to other types
-
-    // use fast-equals for other objects
-    return deepEqual(a, b)
-  }
-)
-
-function useDeepCompareMemoize(value: any) {
-  const ref = useRef()
-
-  if (!deepCompareEqualsForMaps(value, ref.current)) {
-    ref.current = value
-  }
-
-  return ref.current
-}
-
-function useDeepCompareEffectForMaps(
-  callback: EffectCallback,
-  dependencies: any[]
-) {
-  useEffect(callback, dependencies.map(useDeepCompareMemoize))
 }
 
 export const Map: React.FC<MapProps> = ({
   onClick,
   onIdle,
   children,
-  style,
   ...options
 }) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -95,7 +57,7 @@ export const Map: React.FC<MapProps> = ({
 
   return (
     <>
-      <div ref={ref} style={style} />
+      <div ref={ref} className={styles.map} />
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
           // set the map prop on the child component
