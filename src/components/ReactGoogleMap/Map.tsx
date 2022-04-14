@@ -10,7 +10,7 @@ import { generateHouses } from 'utils/options'
 import { Circles } from './Circles'
 import { Directions } from './Directions'
 import { MarkerList } from './MakerList'
-import { MarkerInfo } from './MarkerInfo'
+import { MarkerInfo } from './MarkerInfo.jsx'
 import { Sidebar } from './Sidebar'
 import styles from './styles.module.scss'
 

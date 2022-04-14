@@ -1,18 +1,13 @@
 import { OverlayView } from '@react-google-maps/api'
-import { LatLngLiteral } from 'types/googleMaps'
 import styles from './styles.module.scss'
 
-interface MarkerInfoProps {
-  position: LatLngLiteral
-  description: string
-  showOverlay: boolean
-}
+// interface MarkerInfoProps {
+//   position: LatLngLiteral
+//   description: string
+//   showOverlay: boolean
+// }
 
-export function MarkerInfo({
-  position,
-  description,
-  showOverlay,
-}: MarkerInfoProps) {
+export function MarkerInfo({ position, description, showOverlay }) {
   return (
     <OverlayView position={position} mapPaneName={OverlayView.FLOAT_PANE}>
       <div
