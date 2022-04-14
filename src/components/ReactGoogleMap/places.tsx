@@ -1,4 +1,3 @@
-import '@reach/combobox/styles.css'
 import { LatLngLiteral } from 'types/googleMaps'
 
 type PlacesProps = {

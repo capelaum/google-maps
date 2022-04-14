@@ -1,5 +1,6 @@
 import { useLoadScript } from '@react-google-maps/api'
 import { Loader } from 'components/Loader'
+import Map from 'components/ReactGoogleMap/map'
 
 export default function ReactGoogleMaps() {
   const { isLoaded } = useLoadScript({
@@ -10,8 +11,8 @@ export default function ReactGoogleMaps() {
   if (!isLoaded) return <Loader />
 
   return (
-    <div>
-      <h1>Map</h1>
-    </div>
+    <>
+      <Map />
+    </>
   )
 }

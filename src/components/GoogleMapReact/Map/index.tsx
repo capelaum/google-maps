@@ -29,7 +29,7 @@ export function Map({ center, zoom, eventData }: MapProps) {
     const locations = event.geometries.map((location) => {
       return (
         <LocationMarker
-          key={event.id}
+          key={`${event.id}-${location.coordinates[0]}-${location.coordinates[1]}`}
           lat={location.coordinates[1]}
           lng={location.coordinates[0]}
           category={event.categories[0].title}
