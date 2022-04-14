@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
+import { MarkerOptions, MarkerType } from 'types/googleMaps'
 
-export const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
-  const [marker, setMarker] = useState<google.maps.Marker>()
+export const Marker: React.FC<MarkerOptions> = (options) => {
+  const [marker, setMarker] = useState<MarkerType>()
 
   useEffect(() => {
     if (!marker) {

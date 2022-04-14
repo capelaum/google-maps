@@ -7,12 +7,13 @@ import {
   useRef,
   useState,
 } from 'react'
+import { GoogleMapsMap, MapMouseEvent, MapOptions } from 'types/googleMaps'
 import { useDeepCompareEffectForMaps } from '../utils/deepCompare'
 import styles from './styles.module.scss'
 
-interface MapProps extends google.maps.MapOptions {
-  onClick?: (e: google.maps.MapMouseEvent) => void
-  onIdle?: (map: google.maps.Map) => void
+interface MapProps extends MapOptions {
+  onClick?: (e: MapMouseEvent) => void
+  onIdle?: (map: GoogleMapsMap) => void
   children: ReactNode
 }
 
@@ -23,7 +24,7 @@ export const Map: React.FC<MapProps> = ({
   ...options
 }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const [map, setMap] = useState<google.maps.Map>()
+  const [map, setMap] = useState<GoogleMapsMap>()
 
   useEffect(() => {
     if (ref.current && !map) {

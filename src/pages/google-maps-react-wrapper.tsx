@@ -6,24 +6,30 @@ import { Marker } from 'components/GoogleMaps/Marker'
 import Link from 'next/link'
 import { useState } from 'react'
 import styles from 'styles/googleWrapper.module.scss'
+import {
+  GoogleMapsMap,
+  LatLng,
+  LatLngLiteral,
+  MapMouseEvent,
+} from 'types/googleMaps'
 
 const render = (status: Status) => {
   return <h1>{status}</h1>
 }
 
 export default function App() {
-  const [clicks, setClicks] = useState<google.maps.LatLng[]>([])
+  const [clicks, setClicks] = useState<LatLng[]>([])
   const [zoom, setZoom] = useState(3) // initial zoom
-  const [center, setCenter] = useState<google.maps.LatLngLiteral>({
+  const [center, setCenter] = useState<LatLngLiteral>({
     lat: 0,
     lng: 0,
   })
 
-  const onClick = (e: google.maps.MapMouseEvent) => {
+  const onClick = (e: MapMouseEvent) => {
     setClicks([...clicks, e.latLng!])
   }
 
-  const onIdle = (m: google.maps.Map) => {
+  const onIdle = (m: GoogleMapsMap) => {
     console.log('onIdle')
     setZoom(m.getZoom()!)
     setCenter(m.getCenter()!.toJSON())

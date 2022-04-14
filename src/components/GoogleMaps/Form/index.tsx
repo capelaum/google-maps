@@ -1,12 +1,13 @@
+import { LatLng, LatLngLiteral } from 'types/googleMaps'
 import styles from './styles.module.scss'
 
 interface FormProps {
   zoom: number
-  center: google.maps.LatLngLiteral
-  clicks: google.maps.LatLng[]
+  center: LatLngLiteral
+  clicks: LatLng[]
   setZoom: (zoom: number) => void
-  setCenter: (center: google.maps.LatLngLiteral) => void
-  setClicks: (clicks: google.maps.LatLng[]) => void
+  setCenter: (center: LatLngLiteral) => void
+  setClicks: (clicks: LatLng[]) => void
 }
 
 export function Form({

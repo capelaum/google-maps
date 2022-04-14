@@ -9,7 +9,7 @@ export function Loader() {
         strokeColor="var(--color-pink-500)"
         strokeWidth="2"
       />
-      <h1 className={styles.title}>Fetching Data...</h1>
+      <h1 className={styles.title}>Loading...</h1>
     </div>
   )
 }
