@@ -1,18 +1,11 @@
 import { LocationInfoBox } from 'components/GoogleMapReact/LocationInfoBox'
 import { LocationMarker } from 'components/GoogleMapReact/LocationMarker'
-import GoogleMapReact, { Coords } from 'google-map-react'
+import GoogleMapReact from 'google-map-react'
 import { useState } from 'react'
-import { NaturalEvent } from 'types/event'
 import styles from './styles.module.scss'
 
-interface MapProps {
-  center?: Coords
-  zoom?: number
-  eventData: NaturalEvent[]
-}
-
-export function Map({ center, zoom, eventData }: MapProps) {
-  const [event, setEvent] = useState<NaturalEvent | null>(null)
+export function Map({ eventData }) {
+  const [event, setEvent] = useState(null)
 
   const defaultProps = {
     center: {
@@ -22,10 +15,7 @@ export function Map({ center, zoom, eventData }: MapProps) {
     zoom: 5,
   }
 
-  const centerCoords = center ?? defaultProps.center
-  const zoomInitial = zoom ?? defaultProps.zoom
-
-  const markers = eventData.map((event: NaturalEvent) => {
+  const markers = eventData.map((event) => {
     const locations = event.geometries.map((location) => {
       return (
         <LocationMarker
@@ -47,12 +37,12 @@ export function Map({ center, zoom, eventData }: MapProps) {
         bootstrapURLKeys={{
           key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
         }}
-        defaultCenter={centerCoords}
-        defaultZoom={zoomInitial}
-        yesIWantToUseGoogleMapApiInternals
+        defaultCenter={defaultProps.center}
+        defaultZoom={defaultProps.zoom}
       >
         {markers}
       </GoogleMapReact>
+
       {event && <LocationInfoBox {...event} />}
     </div>
   )

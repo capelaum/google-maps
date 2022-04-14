@@ -12,8 +12,6 @@ type DistanceProps = {
 }
 
 export default function Distance({ leg }: DistanceProps) {
-  console.log('🚀 ~ leg', leg)
-
   if (!leg.distance || !leg.duration) return null
 
   const days = Math.floor(

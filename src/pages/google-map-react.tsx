@@ -1,5 +1,5 @@
 import { GoogleMapReactHeader } from 'components/GoogleMapReact/GoogleMapReactHeader'
-import { Map } from 'components/GoogleMapReact/Map'
+import { Map } from 'components/GoogleMapReact/Map/index.jsx'
 import { Loader } from 'components/Loader'
 import type { NextPage } from 'next'
 import Head from 'next/head'

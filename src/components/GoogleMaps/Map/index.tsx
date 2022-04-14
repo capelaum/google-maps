@@ -37,9 +37,11 @@ export const Map = ({
 
   useEffect(() => {
     if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, { center, zoom }))
+      setMap(
+        new window.google.maps.Map(ref.current, { center, zoom, ...options })
+      )
     }
-  }, [ref, map, center, zoom])
+  }, [ref, map, center, zoom, options])
 
   // because React does not do deep comparisons, a custom hook is used
   // see discussion in https://github.com/googlemaps/js-samples/issues/946

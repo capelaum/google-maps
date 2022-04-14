@@ -6,13 +6,13 @@ import {
   Location,
   MapOptions,
 } from 'types/googleMaps'
+import { generateHouses } from 'utils/options'
 import { Circles } from './Circles'
 import { Directions } from './Directions'
 import { MarkerList } from './MakerList'
 import { MarkerInfo } from './MarkerInfo'
 import { Sidebar } from './Sidebar'
 import styles from './styles.module.scss'
-import { generateHouses } from './utils/map'
 
 export default function Map() {
   const [directions, setDirections] = useState<DirectionsResult>()

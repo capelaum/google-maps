@@ -1,4 +1,6 @@
+import { Button } from 'components/Button'
 import { Header } from 'components/Header'
+import Link from 'next/link'
 import { NaturalEvent } from 'types/event'
 import styles from './styles.module.scss'
 
@@ -14,7 +16,7 @@ export function GoogleMapReactHeader({ eventData }: HeaderProps) {
   const eventCategories = eventData.reduce((acc, event) => {
     const category = event.categories[0].title
 
-    !acc.hasOwnProperty(category) ? (acc[category] = 1) : acc[category]++
+    acc.hasOwnProperty(category) ? acc[category]++ : (acc[category] = 1)
 
     return acc
   }, {} as EventCategories)
@@ -31,6 +33,9 @@ export function GoogleMapReactHeader({ eventData }: HeaderProps) {
         </ul>
         <h2>Total: {eventData.length}</h2>
       </div>
+      <Button>
+        <Link href="/">Voltar</Link>
+      </Button>
     </Header>
   )
 }

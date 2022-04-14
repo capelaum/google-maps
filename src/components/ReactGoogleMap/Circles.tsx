@@ -1,6 +1,6 @@
 import { Circle } from '@react-google-maps/api'
 import { LatLngLiteral } from 'types/googleMaps'
-import { closeOptions, farOptions, middleOptions } from './utils/map'
+import { closeOptions, farOptions, middleOptions } from 'utils/options'
 
 interface CirclesProps {
   position: LatLngLiteral

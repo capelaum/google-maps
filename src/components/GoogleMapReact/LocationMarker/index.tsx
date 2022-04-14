@@ -9,16 +9,16 @@ import styles from './styles.module.scss'
 interface LocationMarkerProps {
   lat: number
   lng: number
-  category: string
+  category?: string
   onClick?: () => void
 }
 
-export function LocationMarker({
+export const LocationMarker: React.FC<LocationMarkerProps> = ({
   lat,
   lng,
   category,
   onClick,
-}: LocationMarkerProps) {
+}) => {
   function renderNaturalEventIcon() {
     switch (category) {
       case 'Wildfires':

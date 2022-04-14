@@ -5,6 +5,7 @@
     "paths": {
       "@public/*": ["../public/*"]
     },
+    "typeRoots": ["node_modules/@types"],
     "lib": ["dom", "dom.iterable", "esnext", "es6"],
     "allowJs": true,
     "skipLibCheck": true,
