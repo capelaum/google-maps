@@ -4,6 +4,21 @@ import Head from 'next/head'
 import Link from 'next/link'
 import styles from 'styles/Home.module.scss'
 
+const maps = [
+  {
+    name: 'Google Map React',
+    href: '/google-map-react',
+  },
+  {
+    name: 'Google Maps React Wrapper',
+    href: '/google-maps-react-wrapper',
+  },
+  {
+    name: 'React Google Maps',
+    href: '/react-google-maps',
+  },
+]
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -15,17 +30,13 @@ const Home: NextPage = () => {
       <h1>Home</h1>
 
       <div className={styles.buttonsContainer}>
-        <Button>
-          <Link href="/google-map-react">
-            <a>Google Map React</a>
-          </Link>
-        </Button>
-
-        <Button>
-          <Link href="/@googlemaps-react-wrapper">
-            <a>@Google Map React Wrapper</a>
-          </Link>
-        </Button>
+        {maps.map(({ name, href }) => (
+          <Button key={name}>
+            <Link href={href}>
+              <a>{name}</a>
+            </Link>
+          </Button>
+        ))}
       </div>
     </div>
   )
