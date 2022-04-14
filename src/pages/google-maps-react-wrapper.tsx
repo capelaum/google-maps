@@ -2,8 +2,9 @@ import { Status, Wrapper } from '@googlemaps/react-wrapper'
 import { Form } from 'components/GoogleMaps/Form'
 import { Map } from 'components/GoogleMaps/Map'
 import { Marker } from 'components/GoogleMaps/Marker'
+import { Loader } from 'components/Loader'
 import Head from 'next/head'
-import { useMemo, useState } from 'react'
+import { ReactElement, useMemo, useState } from 'react'
 import styles from 'styles/googleWrapper.module.scss'
 import {
   GoogleMapsMap,
@@ -13,16 +14,12 @@ import {
   MapOptions,
 } from 'types/googleMaps'
 
-const render = (status: Status) => {
-  return <h1>{status}</h1>
-}
-
 export default function App() {
-  const [location, setLocation] = useState<LatLng | null>(null)
-  const [zoom, setZoom] = useState(3) // initial zoom
+  const [marker, setMarker] = useState<LatLng | null>(null)
+  const [zoom, setZoom] = useState(14) // initial zoom
   const [center, setCenter] = useState<LatLngLiteral>({
-    lat: 0,
-    lng: 0,
+    lat: -15.79,
+    lng: -47.88,
   })
 
   const options = useMemo<MapOptions>(
@@ -35,14 +32,19 @@ export default function App() {
     []
   )
 
-  const onClick = (e: MapMouseEvent) => {
-    setLocation(e.latLng!)
+  const placeMarker = (e: MapMouseEvent) => {
+    setMarker(e.latLng!)
   }
 
   const onIdle = (m: GoogleMapsMap) => {
     console.log('onIdle')
     setZoom(m.getZoom()!)
     setCenter(m.getCenter()!.toJSON())
+  }
+
+  const render = (status: Status): ReactElement => {
+    if (status === Status.FAILURE) return <div>Error</div>
+    return <Loader />
   }
 
   return (
@@ -57,22 +59,22 @@ export default function App() {
       >
         <Map
           center={center}
-          onClick={onClick}
+          onClick={placeMarker}
           onIdle={onIdle}
           zoom={zoom}
-          mapId="2a64e534ec5b7704"
+          {...options}
         >
-          {location && <Marker key={`${location}`} position={location} />}
+          {marker && <Marker position={marker} />}
         </Map>
       </Wrapper>
 
       <Form
         zoom={zoom}
         center={center}
-        location={location}
+        marker={marker}
         setZoom={setZoom}
         setCenter={setCenter}
-        setLocation={setLocation}
+        setMarker={setMarker}
       />
     </div>
   )

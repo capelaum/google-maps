@@ -6,19 +6,19 @@ import styles from './styles.module.scss'
 interface FormProps {
   zoom: number
   center: LatLngLiteral
-  location: LatLng | null
+  marker: LatLng | null
   setZoom: (zoom: number) => void
   setCenter: (center: LatLngLiteral) => void
-  setLocation: (location: LatLng | null) => void
+  setMarker: (marker: LatLng | null) => void
 }
 
 export function Form({
   zoom,
   center,
-  location,
+  marker,
   setZoom,
   setCenter,
-  setLocation,
+  setMarker,
 }: FormProps) {
   return (
     <div className={styles.form}>
@@ -53,18 +53,18 @@ export function Form({
         }
       />
 
-      <h3>{location ? 'Marker' : 'Click on map to add markers'}</h3>
+      <h3>{marker ? 'Marker' : 'Click on map to add markers'}</h3>
 
-      {location && (
+      {marker && (
         <>
           <strong>Latitude</strong>
-          <span>{location.lat()}</span>
+          <span>{marker.lat()}</span>
           <strong>Longitude</strong>
-          <span>{location.lng()}</span>
+          <span>{marker.lng()}</span>
         </>
       )}
 
-      <Button onClick={() => setLocation(null)} className={styles.clearButton}>
+      <Button onClick={() => setMarker(null)} className={styles.clearButton}>
         Clear
       </Button>
 
