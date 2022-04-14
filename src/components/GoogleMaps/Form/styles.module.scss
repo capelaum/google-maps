@@ -1,0 +1,44 @@
+.form {
+  padding: 1rem;
+  flex-basis: 250px;
+  height: 100%;
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  input {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    font-size: 1.125rem;
+    border-radius: 5px;
+
+    background-color: var(--color-blue-400);
+    color: white;
+
+    border: none;
+  }
+
+  label {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-pink-500);
+  }
+
+  button {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.125rem;
+
+    border-radius: 5px;
+
+    padding: 0.5rem 0.75rem;
+    background-color: var(--color-pink-500);
+
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: var(--color-pink-600);
+    }
+  }
+}

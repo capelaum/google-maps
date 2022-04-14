@@ -29,7 +29,7 @@ export function LocationMarker({
           />
         )
       case 'Severe Storms':
-        return <RiThunderstormsFill size={18} color="var(--color-blue-900)" />
+        return <RiThunderstormsFill size={18} color="var(--color-blue-500)" />
       case 'Volcanoes':
         return <WiVolcano size={28} color="firebrick" />
       case 'Snow':

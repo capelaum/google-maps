@@ -1,7 +1,9 @@
 import { Status, Wrapper } from '@googlemaps/react-wrapper'
+import { Button } from 'components/Button'
 import { Form } from 'components/GoogleMaps/Form'
 import { Map } from 'components/GoogleMaps/Map'
 import { Marker } from 'components/GoogleMaps/Marker'
+import Link from 'next/link'
 import { useState } from 'react'
 import styles from 'styles/googleWrapper.module.scss'
 
@@ -48,6 +50,12 @@ export default function App() {
         setCenter={setCenter}
         setClicks={setClicks}
       />
+
+      <div className={styles.buttonContainer}>
+        <Button>
+          <Link href="/">Voltar</Link>
+        </Button>
+      </div>
     </div>
   )
 }
