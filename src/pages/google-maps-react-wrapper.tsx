@@ -7,6 +7,7 @@ import Head from 'next/head'
 import { ReactElement, useMemo, useState } from 'react'
 import styles from 'styles/googleWrapper.module.scss'
 import {
+  DirectionsResult,
   GoogleMapsMap,
   LatLng,
   LatLngLiteral,
@@ -25,6 +26,8 @@ export default function App() {
   const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
   const [marker, setMarker] = useState<LatLng | null>(null)
   const [zoom, setZoom] = useState(14)
+
+  const [directions, setDirections] = useState<DirectionsResult>()
 
   const options = useMemo<MapOptions>(() => mapOptions, [])
   const randomLocations = useMemo(() => generateHouses(center, 20), [center])

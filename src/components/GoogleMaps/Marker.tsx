@@ -9,7 +9,6 @@ export const Marker: React.FC<MarkerOptions> = (options) => {
       setMarker(new google.maps.Marker())
     }
 
-    // remove marker from map on unmount
     return () => {
       if (marker) {
         marker.setMap(null)

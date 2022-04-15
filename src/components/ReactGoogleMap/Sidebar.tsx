@@ -20,9 +20,9 @@ export function Sidebar({ handleSetLocation, directions }: SidebarProps) {
       {directions && <Distance leg={directions.routes[0].legs[0]} />}
 
       <div className={styles.buttonContainer}>
-        <Button>
-          <Link href="/">Voltar</Link>
-        </Button>
+        <Link href="/" passHref>
+          <Button>Voltar</Button>
+        </Link>
       </div>
     </div>
   )

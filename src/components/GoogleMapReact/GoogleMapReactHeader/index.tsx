@@ -33,9 +33,9 @@ export function GoogleMapReactHeader({ eventData }: HeaderProps) {
         </ul>
         <h2>Total: {eventData.length}</h2>
       </div>
-      <Button>
-        <Link href="/">Voltar</Link>
-      </Button>
+      <Link href="/" passHref>
+        <Button>Voltar</Button>
+      </Link>
     </Header>
   )
 }

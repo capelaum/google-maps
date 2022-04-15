@@ -69,9 +69,9 @@ export function Form({
       </Button>
 
       <div className={styles.buttonContainer}>
-        <Button>
-          <Link href="/">Voltar</Link>
-        </Button>
+        <Link href="/" passHref>
+          <Button>Voltar</Button>
+        </Link>
       </div>
     </div>
   )
