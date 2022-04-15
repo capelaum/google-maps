@@ -1,15 +1,15 @@
 import { Button } from 'components/Button'
 import Link from 'next/link'
-import { LatLng, LatLngLiteral } from 'types/googleMaps'
+import { LatLngLiteral } from 'types/googleMaps'
 import styles from './styles.module.scss'
 
 interface FormProps {
   zoom: number
   center: LatLngLiteral
-  marker: LatLng | null
+  marker: LatLngLiteral | null
   setZoom: (zoom: number) => void
   setCenter: (center: LatLngLiteral) => void
-  setMarker: (marker: LatLng | null) => void
+  setMarker: (marker: LatLngLiteral | null) => void
 }
 
 export function Form({
@@ -58,9 +58,9 @@ export function Form({
       {marker && (
         <>
           <strong>Latitude</strong>
-          <span>{marker.lat()}</span>
+          <span>{marker.lat}</span>
           <strong>Longitude</strong>
-          <span>{marker.lng()}</span>
+          <span>{marker.lng}</span>
         </>
       )}
 
@@ -68,11 +68,11 @@ export function Form({
         Clear
       </Button>
 
-      <div className={styles.buttonContainer}>
+      <Button className={styles.buttonContainer}>
         <Link href="/" passHref>
-          <Button>Voltar</Button>
+          Voltar
         </Link>
-      </div>
+      </Button>
     </div>
   )
 }

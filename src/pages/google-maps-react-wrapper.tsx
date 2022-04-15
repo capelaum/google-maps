@@ -9,12 +9,11 @@ import styles from 'styles/googleWrapper.module.scss'
 import {
   DirectionsResult,
   GoogleMapsMap,
-  LatLng,
   LatLngLiteral,
   MapMouseEvent,
   MapOptions,
 } from 'types/googleMaps'
-import { generateHouses } from 'utils/functions'
+import { fetchDirections, generateRandomLocations } from 'utils/functions'
 import { defaultCenter, mapOptions } from 'utils/options'
 
 const render = (status: Status): ReactElement => {
@@ -24,22 +23,35 @@ const render = (status: Status): ReactElement => {
 
 export default function App() {
   const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
-  const [marker, setMarker] = useState<LatLng | null>(null)
+  const [marker, setMarker] = useState<LatLngLiteral | null>(null)
   const [zoom, setZoom] = useState(14)
 
   const [directions, setDirections] = useState<DirectionsResult>()
 
   const options = useMemo<MapOptions>(() => mapOptions, [])
-  const randomLocations = useMemo(() => generateHouses(center, 20), [center])
+  const randomLocations = useMemo(
+    () => generateRandomLocations(marker ?? defaultCenter, 20),
+    [marker]
+  )
 
   const placeMarker = (e: MapMouseEvent) => {
-    setMarker(e.latLng!)
+    const { latLng } = e
+
+    setMarker({ lat: latLng!.lat(), lng: latLng!.lng() })
   }
 
   const onIdle = (m: GoogleMapsMap) => {
     console.log('onIdle')
     setZoom(m.getZoom()!)
     setCenter(m.getCenter()!.toJSON())
+  }
+
+  const handleCreateDirections = async (destination: LatLngLiteral) => {
+    if (!marker) return
+
+    const directionsResult = await fetchDirections(marker, destination)
+
+    if (directionsResult) setDirections(directionsResult)
   }
 
   return (
@@ -57,12 +69,19 @@ export default function App() {
           onClick={placeMarker}
           onIdle={onIdle}
           zoom={zoom}
+          directions={directions}
           {...options}
         >
           {marker && <Marker position={marker} />}
 
           {randomLocations.map((location) => {
-            return <Marker key={JSON.stringify(location)} position={location} />
+            return (
+              <Marker
+                key={JSON.stringify(location)}
+                position={location}
+                handleCreateDirections={handleCreateDirections}
+              />
+            )
           })}
         </Map>
       </Wrapper>

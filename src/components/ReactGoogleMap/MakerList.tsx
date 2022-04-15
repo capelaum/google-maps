@@ -31,7 +31,7 @@ export function MarkerList({
                 location.position
               )
 
-              if (directionsResult) setDirections(directionsResult)
+              setDirections(directionsResult!)
             }}
           />
         ))

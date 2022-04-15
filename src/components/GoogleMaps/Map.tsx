@@ -4,10 +4,12 @@ import {
   isValidElement,
   ReactNode,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react'
 import {
+  DirectionsResult,
   GoogleMapsMap,
   LatLng,
   LatLngLiteral,
@@ -22,6 +24,7 @@ interface MapProps extends MapOptions {
   onClick?: (e: MapMouseEvent) => void
   onIdle?: (map: GoogleMapsMap) => void
   children: ReactNode
+  directions: DirectionsResult | undefined
 }
 
 export const Map = ({
@@ -30,18 +33,35 @@ export const Map = ({
   onClick,
   onIdle,
   children,
+  directions,
   ...options
 }: MapProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<GoogleMapsMap>()
 
+  const directionsRenderer = useMemo(
+    () => new google.maps.DirectionsRenderer(),
+    []
+  )
+
   useEffect(() => {
     if (ref.current && !map) {
+      console.log('SET MAP', map)
+
       setMap(
         new window.google.maps.Map(ref.current, { center, zoom, ...options })
       )
     }
   }, [ref, map, center, zoom, options])
+
+  useEffect(() => {
+    if (directions) {
+      console.log('SET Directions', directions)
+
+      directionsRenderer.setMap(map!)
+      directionsRenderer.setDirections(directions)
+    }
+  }, [directionsRenderer, directions, map])
 
   // because React does not do deep comparisons, a custom hook is used
   // see discussion in https://github.com/googlemaps/js-samples/issues/946

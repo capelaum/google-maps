@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react'
-import { MarkerOptions, MarkerType } from 'types/googleMaps'
+import { LatLngLiteral, MarkerOptions, MarkerType } from 'types/googleMaps'
 
-export const Marker: React.FC<MarkerOptions> = (options) => {
+interface MarkerPros extends MarkerOptions {
+  handleCreateDirections?: (destination: LatLngLiteral) => Promise<void>
+}
+
+export const Marker: React.FC<MarkerPros> = ({
+  handleCreateDirections,
+  ...options
+}) => {
   const [marker, setMarker] = useState<MarkerType>()
 
   useEffect(() => {
@@ -15,6 +22,20 @@ export const Marker: React.FC<MarkerOptions> = (options) => {
       }
     }
   }, [marker])
+
+  useEffect(() => {
+    if (marker) {
+      ;['click'].forEach((eventName) =>
+        google.maps.event.clearListeners(marker, eventName)
+      )
+
+      if (handleCreateDirections) {
+        marker.addListener('click', (marker) =>
+          handleCreateDirections(marker.latLng)
+        )
+      }
+    }
+  }, [marker, handleCreateDirections])
 
   useEffect(() => {
     if (marker) {

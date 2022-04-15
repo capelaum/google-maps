@@ -6,8 +6,8 @@ import {
   Location,
   MapOptions,
 } from 'types/googleMaps'
-import { fetchDirections, generateHouses } from 'utils/functions'
-import { mapOptions } from 'utils/options'
+import { fetchDirections, generateRandomLocations } from 'utils/functions'
+import { defaultCenter, mapOptions } from 'utils/options'
 import { Circles } from './Circles'
 import { Directions } from './Directions'
 import { MarkerList } from './MakerList'
@@ -19,10 +19,7 @@ export default function Map() {
   const [directions, setDirections] = useState<DirectionsResult>()
   const [location, setLocation] = useState<Location>()
   const [showOverlay, setShowOverlay] = useState(false)
-  const [center, setCenter] = useState<LatLngLiteral>({
-    lat: -15.79,
-    lng: -47.88,
-  })
+  const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
 
   const mapRef = useRef<GoogleMap>()
 
@@ -48,7 +45,10 @@ export default function Map() {
   )
 
   const onLoad = useCallback((map) => (mapRef.current = map), [])
-  const randomLocations = useMemo(() => generateHouses(center), [center])
+  const randomLocations = useMemo(
+    () => generateRandomLocations(center),
+    [center]
+  )
 
   return (
     <div className={styles.container}>

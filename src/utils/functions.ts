@@ -1,6 +1,9 @@
 import { DirectionsResult, LatLngLiteral } from 'types/googleMaps'
 
-export const generateHouses = (position: LatLngLiteral, amount = 100) => {
+export const generateRandomLocations = (
+  position: LatLngLiteral,
+  amount = 100
+) => {
   const _houses: Array<LatLngLiteral> = []
 
   for (let i = 0; i < amount; i++) {
@@ -19,8 +22,6 @@ export const fetchDirections = async (
   origin: LatLngLiteral,
   destination: LatLngLiteral
 ): Promise<DirectionsResult | undefined> => {
-  if (!location) return
-
   const service = new google.maps.DirectionsService()
 
   const directionsResult = await service.route(
