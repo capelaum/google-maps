@@ -2,6 +2,7 @@ import { LocationInfoBox } from 'components/GoogleMapReact/LocationInfoBox'
 import { LocationMarker } from 'components/GoogleMapReact/LocationMarker'
 import GoogleMapReact from 'google-map-react'
 import { useState } from 'react'
+import { mapOptions } from 'utils/options'
 import styles from './styles.module.scss'
 
 export function Map({ eventData }) {
@@ -39,6 +40,7 @@ export function Map({ eventData }) {
         }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
+        options={mapOptions}
       >
         {markers}
       </GoogleMapReact>

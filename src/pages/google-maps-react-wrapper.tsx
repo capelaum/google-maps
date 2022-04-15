@@ -34,6 +34,9 @@ export default function App() {
     []
   )
 
+  const iconBase =
+    'https://developers.google.com/maps/documentation/javascript/examples/full/images/'
+
   const placeMarker = (e: MapMouseEvent) => {
     const { latLng } = e
 
@@ -74,7 +77,7 @@ export default function App() {
           directions={directions}
           {...options}
         >
-          {marker && <Marker position={marker} />}
+          {marker && <Marker position={marker} icon="/marker.png" />}
 
           {randomLocations.map((location) => {
             return (

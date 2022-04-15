@@ -30,9 +30,9 @@ export const Marker: React.FC<MarkerPros> = ({
       )
 
       if (handleCreateDirections) {
-        marker.addListener('click', (marker) =>
+        marker.addListener('click', (marker) => {
           handleCreateDirections(marker.latLng)
-        )
+        })
       }
     }
   }, [marker, handleCreateDirections])
