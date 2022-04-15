@@ -1,7 +1,6 @@
 import { Button } from 'components/Button'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Link from 'next/link'
 import styles from 'styles/Home.module.scss'
 
 const maps = [
@@ -31,10 +30,8 @@ const Home: NextPage = () => {
 
       <div className={styles.buttonsContainer}>
         {maps.map(({ name, href }) => (
-          <Button key={name}>
-            <Link href={href}>
-              <a>{name}</a>
-            </Link>
+          <Button key={name} className={styles.buttonContainer} href={href}>
+            {name}
           </Button>
         ))}
       </div>

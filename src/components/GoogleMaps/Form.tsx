@@ -1,5 +1,4 @@
 import { Button } from 'components/Button'
-import Link from 'next/link'
 import { LatLngLiteral } from 'types/googleMaps'
 import styles from './styles.module.scss'
 
@@ -68,10 +67,8 @@ export function Form({
         Clear
       </Button>
 
-      <Button className={styles.buttonContainer}>
-        <Link href="/" passHref>
-          Voltar
-        </Link>
+      <Button className={styles.buttonContainer} href="/">
+        Voltar
       </Button>
     </div>
   )

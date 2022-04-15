@@ -7,7 +7,7 @@ export const generateRandomLocations = (
   const _houses: Array<LatLngLiteral> = []
 
   for (let i = 0; i < amount; i++) {
-    const direction = Math.random() < 0.5 ? -40 : 40
+    const direction = Math.random() < 0.5 ? -12 : 12
 
     _houses.push({
       lat: position.lat + Math.random() / direction,

@@ -1,5 +1,4 @@
 import { Button } from 'components/Button'
-import Link from 'next/link'
 import { DirectionsResult, Location } from 'types/googleMaps'
 import Distance from './Distance'
 import Places from './Places'
@@ -19,10 +18,8 @@ export function Sidebar({ handleSetLocation, directions }: SidebarProps) {
 
       {directions && <Distance leg={directions.routes[0].legs[0]} />}
 
-      <Button className={styles.buttonContainer}>
-        <Link href="/">
-          <a>Voltar</a>
-        </Link>
+      <Button className={styles.buttonContainer} href="/">
+        Voltar
       </Button>
     </div>
   )

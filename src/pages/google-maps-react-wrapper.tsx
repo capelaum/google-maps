@@ -26,16 +26,18 @@ export default function App() {
   const [marker, setMarker] = useState<LatLngLiteral | null>(null)
   const [zoom, setZoom] = useState(14)
 
-  const [directions, setDirections] = useState<DirectionsResult>()
+  const [directions, setDirections] = useState<DirectionsResult | undefined>()
 
   const options = useMemo<MapOptions>(() => mapOptions, [])
   const randomLocations = useMemo(
-    () => generateRandomLocations(marker ?? defaultCenter, 20),
-    [marker]
+    () => generateRandomLocations(defaultCenter, 20),
+    []
   )
 
   const placeMarker = (e: MapMouseEvent) => {
     const { latLng } = e
+
+    setDirections(undefined)
 
     setMarker({ lat: latLng!.lat(), lng: latLng!.lng() })
   }
@@ -51,7 +53,7 @@ export default function App() {
 
     const directionsResult = await fetchDirections(marker, destination)
 
-    if (directionsResult) setDirections(directionsResult)
+    setDirections(directionsResult)
   }
 
   return (

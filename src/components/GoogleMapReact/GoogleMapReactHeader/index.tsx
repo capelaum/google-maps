@@ -1,6 +1,5 @@
 import { Button } from 'components/Button'
 import { Header } from 'components/Header'
-import Link from 'next/link'
 import { NaturalEvent } from 'types/event'
 import styles from './styles.module.scss'
 
@@ -34,11 +33,7 @@ export function GoogleMapReactHeader({ eventData }: HeaderProps) {
         <h2>Total: {eventData.length}</h2>
       </div>
 
-      <Button>
-        <Link href="/" passHref>
-          Voltar
-        </Link>
-      </Button>
+      <Button href="/">Voltar</Button>
     </Header>
   )
 }

@@ -46,8 +46,6 @@ export const Map = ({
 
   useEffect(() => {
     if (ref.current && !map) {
-      console.log('SET MAP', map)
-
       setMap(
         new window.google.maps.Map(ref.current, { center, zoom, ...options })
       )
@@ -56,10 +54,12 @@ export const Map = ({
 
   useEffect(() => {
     if (directions) {
-      console.log('SET Directions', directions)
-
       directionsRenderer.setMap(map!)
       directionsRenderer.setDirections(directions)
+    }
+
+    if (!directions) {
+      directionsRenderer.setMap(null)
     }
   }, [directionsRenderer, directions, map])
 
