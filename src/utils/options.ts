@@ -1,3 +1,8 @@
+export const defaultCenter = {
+  lat: -15.79,
+  lng: -47.88,
+}
+
 export const mapOptions = {
   mapId: process.env.NEXT_PUBLIC_MAP_ID,
   disableDefaultUI: true,

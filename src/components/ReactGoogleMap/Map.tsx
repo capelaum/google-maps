@@ -6,7 +6,7 @@ import {
   Location,
   MapOptions,
 } from 'types/googleMaps'
-import { generateHouses } from 'utils/functions'
+import { fetchDirections, generateHouses } from 'utils/functions'
 import { mapOptions } from 'utils/options'
 import { Circles } from './Circles'
 import { Directions } from './Directions'
@@ -50,25 +50,6 @@ export default function Map() {
   const onLoad = useCallback((map) => (mapRef.current = map), [])
   const randomLocations = useMemo(() => generateHouses(center), [center])
 
-  const fetchDirections = (position: LatLngLiteral) => {
-    if (!location) return
-
-    const service = new google.maps.DirectionsService()
-
-    service.route(
-      {
-        origin: position,
-        destination: location.position,
-        travelMode: google.maps.TravelMode.DRIVING,
-      },
-      (result, status) => {
-        if (status === google.maps.DirectionsStatus.OK && result) {
-          setDirections(result)
-        }
-      }
-    )
-  }
-
   return (
     <div className={styles.container}>
       <Sidebar handleSetLocation={handleSetLocation} directions={directions} />
@@ -94,6 +75,8 @@ export default function Map() {
               <MarkerList
                 locations={randomLocations}
                 fetchDirections={fetchDirections}
+                location={location}
+                setDirections={setDirections}
               />
 
               <MarkerInfo

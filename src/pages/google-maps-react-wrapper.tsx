@@ -13,17 +13,21 @@ import {
   MapMouseEvent,
   MapOptions,
 } from 'types/googleMaps'
-import { mapOptions } from 'utils/options'
+import { generateHouses } from 'utils/functions'
+import { defaultCenter, mapOptions } from 'utils/options'
+
+const render = (status: Status): ReactElement => {
+  if (status === Status.FAILURE) return <div>Error</div>
+  return <Loader />
+}
 
 export default function App() {
+  const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
   const [marker, setMarker] = useState<LatLng | null>(null)
-  const [zoom, setZoom] = useState(14) // initial zoom
-  const [center, setCenter] = useState<LatLngLiteral>({
-    lat: -15.79,
-    lng: -47.88,
-  })
+  const [zoom, setZoom] = useState(14)
 
   const options = useMemo<MapOptions>(() => mapOptions, [])
+  const randomLocations = useMemo(() => generateHouses(center, 20), [center])
 
   const placeMarker = (e: MapMouseEvent) => {
     setMarker(e.latLng!)
@@ -33,11 +37,6 @@ export default function App() {
     console.log('onIdle')
     setZoom(m.getZoom()!)
     setCenter(m.getCenter()!.toJSON())
-  }
-
-  const render = (status: Status): ReactElement => {
-    if (status === Status.FAILURE) return <div>Error</div>
-    return <Loader />
   }
 
   return (
@@ -58,6 +57,10 @@ export default function App() {
           {...options}
         >
           {marker && <Marker position={marker} />}
+
+          {randomLocations.map((location) => {
+            return <Marker key={JSON.stringify(location)} position={location} />
+          })}
         </Map>
       </Wrapper>
 
