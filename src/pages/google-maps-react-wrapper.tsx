@@ -13,6 +13,7 @@ import {
   MapMouseEvent,
   MapOptions,
 } from 'types/googleMaps'
+import { mapOptions } from 'utils/options'
 
 export default function App() {
   const [marker, setMarker] = useState<LatLng | null>(null)
@@ -22,15 +23,7 @@ export default function App() {
     lng: -47.88,
   })
 
-  const options = useMemo<MapOptions>(
-    () => ({
-      mapId: '2a64e534ec5b7704',
-      disableDefaultUI: true,
-      zoomControl: true,
-      clickableIcons: false,
-    }),
-    []
-  )
+  const options = useMemo<MapOptions>(() => mapOptions, [])
 
   const placeMarker = (e: MapMouseEvent) => {
     setMarker(e.latLng!)

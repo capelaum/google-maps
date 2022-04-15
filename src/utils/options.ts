@@ -1,6 +1,11 @@
-import { LatLngLiteral } from 'types/googleMaps'
+export const mapOptions = {
+  mapId: process.env.NEXT_PUBLIC_MAP_ID,
+  disableDefaultUI: true,
+  zoomControl: true,
+  clickableIcons: false,
+}
 
-export const defaultOptions = {
+export const circleDefaultOptions = {
   strokeOpacity: 0.5,
   strokeWeight: 2,
   clickable: false,
@@ -10,7 +15,7 @@ export const defaultOptions = {
 }
 
 export const closeOptions = {
-  ...defaultOptions,
+  ...circleDefaultOptions,
   zIndex: 3,
   fillOpacity: 0.05,
   strokeColor: '#8BC34A',
@@ -18,7 +23,7 @@ export const closeOptions = {
 }
 
 export const middleOptions = {
-  ...defaultOptions,
+  ...circleDefaultOptions,
   zIndex: 2,
   fillOpacity: 0.05,
   strokeColor: '#FBC02D',
@@ -26,24 +31,9 @@ export const middleOptions = {
 }
 
 export const farOptions = {
-  ...defaultOptions,
+  ...circleDefaultOptions,
   zIndex: 1,
   fillOpacity: 0.05,
   strokeColor: '#FF5252',
   fillColor: '#FF5252',
-}
-
-export const generateHouses = (position: LatLngLiteral) => {
-  const _houses: Array<LatLngLiteral> = []
-
-  for (let i = 0; i < 100; i++) {
-    const direction = Math.random() < 0.5 ? -20 : 20
-
-    _houses.push({
-      lat: position.lat + Math.random() / direction,
-      lng: position.lng + Math.random() / direction,
-    })
-  }
-
-  return _houses
 }

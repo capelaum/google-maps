@@ -6,7 +6,8 @@ import {
   Location,
   MapOptions,
 } from 'types/googleMaps'
-import { generateHouses } from 'utils/options'
+import { generateHouses } from 'utils/functions'
+import { mapOptions } from 'utils/options'
 import { Circles } from './Circles'
 import { Directions } from './Directions'
 import { MarkerList } from './MakerList'
@@ -26,15 +27,7 @@ export default function Map() {
   const mapRef = useRef<GoogleMap>()
 
   // const center = useMemo<LatLngLiteral>(() => ({ lat: 43, lng: -80 }), [])
-  const options = useMemo<MapOptions>(
-    () => ({
-      mapId: '57293b7a8495c116',
-      disableDefaultUI: true,
-      zoomControl: true,
-      clickableIcons: false,
-    }),
-    []
-  )
+  const options = useMemo<MapOptions>(() => mapOptions, [])
 
   const handleSetLocation = useCallback((location: Location) => {
     if (location) {
