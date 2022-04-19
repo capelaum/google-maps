@@ -30,8 +30,8 @@ export default function App() {
 
   const options = useMemo<MapOptions>(() => mapOptions, [])
   const randomLocations = useMemo(
-    () => generateRandomLocations(defaultCenter, 20),
-    []
+    () => generateRandomLocations(marker ?? defaultCenter, 20),
+    [marker]
   )
 
   const iconBase =
