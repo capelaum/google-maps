@@ -32,6 +32,7 @@ export default function Map() {
       if (location) {
         setLocation(location)
         mapRef.current?.panTo(location.position)
+
         if (directions) {
           setDirections(undefined)
         }
@@ -51,11 +52,12 @@ export default function Map() {
     [showOverlay]
   )
 
-  const onIdle = () => {
+  const onIdle = useCallback(() => {
     console.log('onIdle')
-    setZoom(mapRef.current?.getZoom()!)
+
+    setZoom(mapRef.current!.getZoom()!)
     setCenter(mapRef.current!.getCenter()!.toJSON())
-  }
+  }, [])
 
   const onLoad = useCallback((map: GoogleMapsMap) => {
     mapRef.current = map
@@ -80,7 +82,7 @@ export default function Map() {
         <GoogleMap
           onIdle={onIdle}
           zoom={zoom}
-          center={center}
+          center={defaultCenter}
           options={options}
           onLoad={onLoad}
           mapContainerClassName={styles.mapContainer}

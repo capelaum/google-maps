@@ -42,12 +42,8 @@ export function Sidebar({
           <h2>Centro</h2>
           <p>Latitude: {center.lat}</p>
           <p>Longitude: {center.lng}</p>
+          <p>Zoom: {zoom}</p>
         </div>
-
-        <hr />
-
-        <h2>Zoom</h2>
-        <p>Zoom: {zoom}</p>
       </div>
 
       <Button className={styles.buttonContainer} href="/">
