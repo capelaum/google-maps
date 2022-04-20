@@ -55,6 +55,7 @@ export default function Map() {
 
   const clearLocation = useCallback(() => {
     setLocation(undefined)
+    setDirections(undefined)
   }, [])
 
   const onIdle = useCallback(() => {
