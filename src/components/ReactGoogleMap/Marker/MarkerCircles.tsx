@@ -6,7 +6,7 @@ interface CirclesProps {
   position: LatLngLiteral
 }
 
-export function Circles({ position }: CirclesProps) {
+export function MarkerCircles({ position }: CirclesProps) {
   return (
     <>
       <Circle center={position} radius={1500} options={closeOptions} />

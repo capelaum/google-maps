@@ -1,11 +1,11 @@
 import { DirectionsLeg } from 'types/googleMaps'
-import styles from './styles.module.scss'
+import styles from '../styles.module.scss'
 
 type DistanceProps = {
   leg: DirectionsLeg
 }
 
-export default function Distance({ leg }: DistanceProps) {
+export function Distance({ leg }: DistanceProps) {
   if (!leg.distance || !leg.duration) return null
 
   return (

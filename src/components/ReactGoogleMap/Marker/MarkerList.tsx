@@ -1,4 +1,5 @@
 import { Marker, MarkerClusterer } from '@react-google-maps/api'
+import { useCallback } from 'react'
 import { DirectionsResult, LatLngLiteral, Location } from 'types/googleMaps'
 
 interface MarkerListProps {
@@ -17,6 +18,18 @@ export function MarkerList({
   fetchDirections,
   setDirections,
 }: MarkerListProps) {
+  const handleFetchDirections = useCallback(
+    async (position: LatLngLiteral) => {
+      const directionsResult = await fetchDirections(
+        position,
+        location.position
+      )
+
+      setDirections(directionsResult!)
+    },
+    [fetchDirections, location, setDirections]
+  )
+
   return (
     <MarkerClusterer>
       {(clusterer) =>
@@ -25,14 +38,7 @@ export function MarkerList({
             key={position.lat}
             position={position}
             clusterer={clusterer}
-            onClick={async () => {
-              const directionsResult = await fetchDirections(
-                position,
-                location.position
-              )
-
-              setDirections(directionsResult!)
-            }}
+            onClick={() => handleFetchDirections(position)}
           />
         ))
       }

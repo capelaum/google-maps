@@ -1,4 +1,4 @@
-import { GoogleMap, Marker } from '@react-google-maps/api'
+import { GoogleMap } from '@react-google-maps/api'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   DirectionsResult,
@@ -8,12 +8,9 @@ import {
   MapMouseEvent,
   MapOptions,
 } from 'types/googleMaps'
-import { fetchDirections, generateRandomLocations } from 'utils/functions'
 import { defaultCenter, mapOptions } from 'utils/options'
-import { Circles } from './Circles'
 import { Directions } from './Directions'
-import { MarkerList } from './MakerList'
-import { MarkerInfo } from './MarkerInfo'
+import { MarkerLocation } from './Marker'
 import { Sidebar } from './Sidebar'
 import styles from './styles.module.scss'
 
@@ -22,7 +19,6 @@ export default function Map() {
   const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
   const [directions, setDirections] = useState<DirectionsResult>()
   const [location, setLocation] = useState<Location>()
-  const [showOverlay, setShowOverlay] = useState(false)
 
   const mapRef = useRef<GoogleMapsMap>()
 
@@ -61,16 +57,6 @@ export default function Map() {
     setLocation(undefined)
   }, [])
 
-  const toggleOverlay = useCallback(
-    () => setShowOverlay(!showOverlay),
-    [showOverlay]
-  )
-
-  const randomLocations = useMemo(
-    () => generateRandomLocations(location?.position ?? defaultCenter),
-    [location]
-  )
-
   const onIdle = useCallback(() => {
     // console.log('onIdle')
 
@@ -106,35 +92,7 @@ export default function Map() {
           {directions && <Directions directions={directions} />}
 
           {location && (
-            <>
-              <Marker
-                position={location.position}
-                icon={'/marker.png'}
-                onClick={toggleOverlay}
-              />
-
-              <MarkerList
-                locations={randomLocations}
-                fetchDirections={fetchDirections}
-                location={location}
-                setDirections={setDirections}
-              />
-
-              <MarkerInfo
-                position={location.position}
-                description={location.description}
-                showOverlay={showOverlay}
-              >
-                <div
-                  className={styles.marker}
-                  style={{ display: showOverlay ? 'block' : 'none' }}
-                >
-                  <h2>{location.description}</h2>
-                </div>
-              </MarkerInfo>
-
-              <Circles position={location.position} />
-            </>
+            <MarkerLocation location={location} setDirections={setDirections} />
           )}
         </GoogleMap>
       </div>
