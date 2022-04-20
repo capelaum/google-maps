@@ -44,8 +44,8 @@ export function Sidebar({
 
         <div>
           <h2>Centro</h2>
-          <p>Latitude: {center.lat}</p>
-          <p>Longitude: {center.lng}</p>
+          <p>Latitude: {center.lat.toFixed(3)}</p>
+          <p>Longitude: {center.lng.toFixed(3)}</p>
           <p>Zoom: {zoom}</p>
         </div>
       </div>

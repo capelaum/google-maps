@@ -1,4 +1,4 @@
-import { GoogleMap } from '@react-google-maps/api'
+import { GoogleMap, Marker } from '@react-google-maps/api'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   DirectionsResult,
@@ -17,6 +17,10 @@ import styles from './styles.module.scss'
 export default function Map() {
   const [zoom, setZoom] = useState(14)
   const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
+  const [currentLocation, setCurrentLocation] =
+    useState<LatLngLiteral>(defaultCenter)
+  const [currentCenter, setCurrentCenter] =
+    useState<LatLngLiteral>(defaultCenter)
   const [directions, setDirections] = useState<DirectionsResult>()
   const [location, setLocation] = useState<Location>()
 
@@ -62,11 +66,18 @@ export default function Map() {
     // console.log('onIdle')
 
     setZoom(mapRef.current!.getZoom()!)
-    setCenter(mapRef.current!.getCenter()!.toJSON())
+    setCurrentCenter(mapRef.current!.getCenter()!.toJSON())
   }, [])
 
-  const onLoad = useCallback((map: GoogleMapsMap) => {
+  const onMapLoad = useCallback((map: GoogleMapsMap) => {
     mapRef.current = map
+
+    navigator?.geolocation.getCurrentPosition(
+      ({ coords: { latitude: lat, longitude: lng } }) => {
+        setCurrentLocation({ lat, lng })
+        setCenter({ lat, lng })
+      }
+    )
   }, [])
 
   return (
@@ -76,7 +87,7 @@ export default function Map() {
         clearLocation={clearLocation}
         directions={directions}
         location={location}
-        center={center}
+        center={currentCenter}
         zoom={zoom}
       />
 
@@ -84,11 +95,19 @@ export default function Map() {
         onClick={handleMapClick}
         onIdle={onIdle}
         zoom={zoom}
-        center={defaultCenter}
+        center={center}
         options={options}
-        onLoad={onLoad}
+        onLoad={onMapLoad}
         mapContainerClassName={styles.mapContainer}
       >
+        <Marker
+          position={currentLocation}
+          icon={{
+            url: '/currentMarker.png',
+            scaledSize: new window.google.maps.Size(20, 20),
+          }}
+        />
+
         {directions && <Directions directions={directions} />}
 
         {location && (

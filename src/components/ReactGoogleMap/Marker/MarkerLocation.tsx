@@ -32,7 +32,10 @@ export function MarkerLocation({
     <>
       <Marker
         position={location.position}
-        icon={'/marker.png'}
+        icon={{
+          url: '/marker.png',
+          scaledSize: new window.google.maps.Size(30, 45),
+        }}
         onClick={toggleOverlay}
       />
 
