@@ -7,14 +7,19 @@ import styles from './styles.module.scss'
 interface SidebarProps {
   handleSetLocation: (location: Location) => void
   directions: DirectionsResult | undefined
+  location: Location | undefined
 }
 
-export function Sidebar({ handleSetLocation, directions }: SidebarProps) {
+export function Sidebar({
+  handleSetLocation,
+  directions,
+  location,
+}: SidebarProps) {
   return (
-    <div className={styles.controls}>
+    <div className={styles.sidebar}>
       <h1>Trajeto</h1>
       <Places handleSetLocation={handleSetLocation} />
-      {!location && <p>Enter the address of your destination</p>}
+      {!location && <p>Digite o seu destino</p>}
 
       {directions && <Distance leg={directions.routes[0].legs[0]} />}
 

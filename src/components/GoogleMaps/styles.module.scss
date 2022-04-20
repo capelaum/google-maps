@@ -1,3 +1,5 @@
+@import 'styles/settings/__settings';
+
 .map {
   flex: 1;
   height: 100vh;
@@ -13,21 +15,21 @@
   flex-direction: column;
 
   input {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     padding: 0.5rem;
     font-size: 1.125rem;
     border-radius: 5px;
 
-    background-color: var(--color-blue-400);
+    background-color: $color-blue-800;
     color: white;
 
     border: none;
   }
 
   label {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     margin-bottom: 0.5rem;
-    color: var(--color-pink-500);
+    color: $color-secondary;
   }
 
   h3 {
@@ -37,7 +39,7 @@
 
   strong {
     font-size: 1.125rem;
-    color: var(--color-pink-500);
+    color: $color-secondary;
     margin-bottom: 0.5rem;
   }
 

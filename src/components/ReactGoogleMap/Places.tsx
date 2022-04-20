@@ -42,7 +42,7 @@ export default function Places({ handleSetLocation }: PlacesProps) {
         onChange={(e) => setValue(e.target.value)}
         disabled={!ready}
         className={styles.comboboxInput}
-        placeholder="Search office address"
+        placeholder="Buscar localização"
       />
       <ComboboxPopover>
         <ComboboxList className={styles.comboboxList}>

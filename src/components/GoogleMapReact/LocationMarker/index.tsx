@@ -22,14 +22,9 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({
   function renderNaturalEventIcon() {
     switch (category) {
       case 'Wildfires':
-        return (
-          <MdOutlineLocalFireDepartment
-            size={18}
-            color="var(--color-red-500)"
-          />
-        )
+        return <MdOutlineLocalFireDepartment size={18} color="red" />
       case 'Severe Storms':
-        return <RiThunderstormsFill size={18} color="var(--color-blue-500)" />
+        return <RiThunderstormsFill size={18} color="yellow" />
       case 'Volcanoes':
         return <WiVolcano size={28} color="firebrick" />
       case 'Snow':
@@ -37,7 +32,7 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({
       case 'Sea and Lake Ice':
         return <GiBigWave size={22} color="blue" />
       default:
-        return <FaMapMarkerAlt size={22} color="var(--color-gray-400)" />
+        return <FaMapMarkerAlt size={22} color="#e4e4e4" />
     }
   }
 

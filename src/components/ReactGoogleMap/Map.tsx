@@ -4,7 +4,7 @@ import {
   DirectionsResult,
   LatLngLiteral,
   Location,
-  MapOptions,
+  MapOptions
 } from 'types/googleMaps'
 import { fetchDirections, generateRandomLocations } from 'utils/functions'
 import { defaultCenter, mapOptions } from 'utils/options'
@@ -52,7 +52,11 @@ export default function Map() {
 
   return (
     <div className={styles.container}>
-      <Sidebar handleSetLocation={handleSetLocation} directions={directions} />
+      <Sidebar
+        handleSetLocation={handleSetLocation}
+        directions={directions}
+        location={location}
+      />
 
       <div className={styles.map}>
         <GoogleMap

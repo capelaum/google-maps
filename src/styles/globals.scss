@@ -1,45 +1,11 @@
+@import 'styles/settings/__settings';
+
 *,
 *::after,
 *::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-:root {
-  --font-base: 'Roboto', Arial, Helvetica, sans-serif;
-
-  --color-light-blue-100: #d6d8ee;
-  --color-light-blue-200: #adb1de;
-  --color-light-blue-300: #8389cd;
-  --color-light-blue-400: #5a62bd;
-  --color-light-blue-500: #313bac;
-  --color-light-blue-600: #272f8a;
-  --color-light-blue-700: #1d2367;
-  --color-light-blue-800: #141845;
-  --color-light-blue-900: #0a0c22;
-
-  --color-black: #030303;
-  --color-white: #ffffff;
-  --color-brown: #46364a;
-
-  --color-blue-100: #cdcdd1;
-  --color-blue-200: #9a9ba3;
-  --color-blue-300: #686974;
-  --color-blue-400: #353746;
-  --color-blue-500: #030518;
-  --color-blue-600: #020413;
-  --color-blue-700: #02030e;
-  --color-blue-800: #01020a;
-  --color-blue-900: #010105;
-
-  --color-pink-500: #f231a5;
-  --color-pink-600: #c92386;
-
-  --color-red-500: #ff0000;
-
-  --color-gray-200: #e4e4e4;
-  --color-gray-400: #6b7688;
 }
 
 html {
@@ -58,12 +24,15 @@ html {
   }
 }
 
+html,
 body {
-  font-family: var(--font-base);
-  background-color: var(--color-blue-500);
-  color: var(--color-white);
+  padding: 0;
+  margin: 0;
+  font-family: $font-family;
+  font-weight: $font-weight-regular;
 
-  overflow: hidden;
+  color: $color-white;
+  background-color: $color-primary;
 }
 
 button {
@@ -86,11 +55,11 @@ button {
 }
 
 .sea-and-lake-ice {
-  border: 3px solid blue;
+  border: 3px solid $color-blue-500;
 }
 
 .severe-storms {
-  border: 3px solid var(--color-blue-500);
+  border: 3px solid $color-white;
 }
 
 li {
@@ -103,7 +72,7 @@ input {
   font-size: 1rem;
   border-radius: 5px;
 
-  background-color: var(--color-blue-400);
+  background-color: $color-blue-700;
   color: white;
 
   border: none;
