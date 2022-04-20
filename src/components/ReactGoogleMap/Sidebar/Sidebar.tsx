@@ -25,7 +25,7 @@ export function Sidebar({
     <div className={styles.sidebar}>
       <h1>Trajeto</h1>
 
-      <Places handleSetLocation={handleSetLocation} />
+      <Places handleSetLocation={handleSetLocation} location={location} />
 
       {!location && <p>Digite o seu destino</p>}
 

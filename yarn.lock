@@ -432,6 +432,11 @@
   resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.48.5.tgz#ab2ef4add490a108cdb5149d3df81dafb159528e"
   integrity sha512-sI3EOhGHvzbitC/iLOf2nQ+TijsXqbV2nQi9twpRWy0p6q6vbwRnIy7PQKjmpFQewjTVNa1MfY2BL76MU1lOWA==
 
+"@types/googlemaps@^3.43.3":
+  version "3.43.3"
+  resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.43.3.tgz#70cf962154a160fe78bcd69d6ccc296dd9175b1f"
+  integrity sha512-ZWNoz/O8MPEpiajvj7QiqCY8tTLFNqNZ/a+s+zTV58wFVNAvvqV4bdGfnsjTb5Cs4V6wEsLrX8XRhmnyYJ2Tdg==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"

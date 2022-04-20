@@ -5,25 +5,46 @@ import {
   ComboboxOption,
   ComboboxPopover,
 } from '@reach/combobox'
+import { ChangeEvent } from 'react'
 import { Location } from 'types/googleMaps'
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete'
+import { defaultCenter } from 'utils/options'
 import styles from './styles.module.scss'
 
 type PlacesProps = {
   handleSetLocation: (location: Location) => void
+  location: Location | undefined
 }
 
-export function Places({ handleSetLocation }: PlacesProps) {
+export function Places({ handleSetLocation, location }: PlacesProps) {
+  const defaultBounds = {
+    north: defaultCenter.lat + 0.1,
+    south: defaultCenter.lat - 0.1,
+    east: defaultCenter.lng + 0.1,
+    west: defaultCenter.lng - 0.1,
+  }
+
+  const requestOptions = {
+    types: ['university', 'school'],
+    componentRestrictions: { country: 'br' },
+    bounds: defaultBounds,
+    fields: ['address_components', 'geometry', 'icon', 'name'],
+  }
+
   const {
     ready,
     value,
     setValue,
     suggestions: { status, data },
     clearSuggestions,
-  } = usePlacesAutocomplete()
+  } = usePlacesAutocomplete({
+    requestOptions,
+  })
+
+  // console.log('🚀 ~ data', data)
 
   const handleSelect = async (address: string) => {
     setValue(address, false)
@@ -35,27 +56,51 @@ export function Places({ handleSetLocation }: PlacesProps) {
     handleSetLocation({ position, description: address })
   }
 
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value)
+  }
+
   return (
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
         value={value}
-        onChange={(e) => setValue(e.target.value)}
         disabled={!ready}
+        onChange={handleInput}
         className={styles.comboboxInput}
         placeholder="Buscar localização"
       />
       <ComboboxPopover>
         <ComboboxList className={styles.comboboxList}>
           {status === 'OK' &&
-            data.map(({ place_id, description }) => (
-              <ComboboxOption
-                key={place_id}
-                value={description}
-                className={styles.comboboxOption}
-              />
-            ))}
+            data.map(
+              ({
+                place_id,
+                description,
+                structured_formatting: { main_text, secondary_text },
+              }) => (
+                <ComboboxOption
+                  key={place_id}
+                  value={description}
+                  className={styles.comboboxOption}
+                >
+                  <strong>{main_text}</strong> <small>{secondary_text}</small>
+                </ComboboxOption>
+              )
+            )}
         </ComboboxList>
       </ComboboxPopover>
     </Combobox>
   )
 }
+
+/*
+  Types
+
+  point_of_interest
+  establishment
+  university
+  school
+  real_estate_agency
+
+
+*/
