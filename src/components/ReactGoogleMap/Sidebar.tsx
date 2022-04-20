@@ -1,5 +1,5 @@
 import { Button } from 'components/Button'
-import { DirectionsResult, Location } from 'types/googleMaps'
+import { DirectionsResult, LatLngLiteral, Location } from 'types/googleMaps'
 import Distance from './Distance'
 import Places from './Places'
 import styles from './styles.module.scss'
@@ -8,12 +8,16 @@ interface SidebarProps {
   handleSetLocation: (location: Location) => void
   directions: DirectionsResult | undefined
   location: Location | undefined
+  zoom: number
+  center: LatLngLiteral
 }
 
 export function Sidebar({
   handleSetLocation,
   directions,
   location,
+  center,
+  zoom,
 }: SidebarProps) {
   return (
     <div className={styles.sidebar}>
@@ -22,6 +26,29 @@ export function Sidebar({
       {!location && <p>Digite o seu destino</p>}
 
       {directions && <Distance leg={directions.routes[0].legs[0]} />}
+
+      <div className={styles.locationInfo}>
+        {location && (
+          <>
+            <h2>Localização</h2>
+            <p>Latitude: {location?.position.lat}</p>
+            <p>Longitude: {location?.position.lng}</p>
+          </>
+        )}
+
+        <hr />
+
+        <div>
+          <h2>Centro</h2>
+          <p>Latitude: {center.lat}</p>
+          <p>Longitude: {center.lng}</p>
+        </div>
+
+        <hr />
+
+        <h2>Zoom</h2>
+        <p>Zoom: {zoom}</p>
+      </div>
 
       <Button className={styles.buttonContainer} href="/">
         Voltar

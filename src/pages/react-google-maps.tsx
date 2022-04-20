@@ -1,10 +1,10 @@
-import { useLoadScript } from '@react-google-maps/api'
+import { useJsApiLoader } from '@react-google-maps/api'
 import { Loader } from 'components/Loader'
 import Map from 'components/ReactGoogleMap/Map'
 import Head from 'next/head'
 
 export default function ReactGoogleMaps() {
-  const { isLoaded } = useLoadScript({
+  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     libraries: ['places'],
   })

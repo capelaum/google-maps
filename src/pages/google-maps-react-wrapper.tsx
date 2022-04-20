@@ -22,13 +22,13 @@ const render = (status: Status): ReactElement => {
 }
 
 export default function App() {
+  const [zoom, setZoom] = useState(14)
   const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
   const [marker, setMarker] = useState<LatLngLiteral | null>(null)
-  const [zoom, setZoom] = useState(14)
-
   const [directions, setDirections] = useState<DirectionsResult | undefined>()
 
   const options = useMemo<MapOptions>(() => mapOptions, [])
+
   const randomLocations = useMemo(
     () => generateRandomLocations(marker ?? defaultCenter, 20),
     [marker]

@@ -14,6 +14,16 @@
   p {
     color: $color-white;
   }
+
+  h2 {
+    color: $color-secondary;
+    padding-bottom: 0.5rem;
+  }
+
+  hr {
+    border: 1px solid $color-secondary;
+    margin: 1rem 0;
+  }
 }
 
 .map {
@@ -82,6 +92,8 @@
 }
 
 .distanceContainer {
+  margin-bottom: 1rem;
+
   p {
     margin-top: 1rem;
   }

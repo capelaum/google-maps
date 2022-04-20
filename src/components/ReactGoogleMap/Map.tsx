@@ -2,16 +2,17 @@ import { GoogleMap, Marker } from '@react-google-maps/api'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   DirectionsResult,
+  GoogleMapsMap,
   LatLngLiteral,
   Location,
-  MapOptions
+  MapOptions,
 } from 'types/googleMaps'
 import { fetchDirections, generateRandomLocations } from 'utils/functions'
 import { defaultCenter, mapOptions } from 'utils/options'
 import { Circles } from './Circles'
 import { Directions } from './Directions'
 import { MarkerList } from './MakerList'
-import { MarkerInfo } from './MarkerInfo.jsx'
+import { MarkerInfo } from './MarkerInfo'
 import { Sidebar } from './Sidebar'
 import styles from './styles.module.scss'
 
@@ -20,18 +21,24 @@ export default function Map() {
   const [location, setLocation] = useState<Location>()
   const [showOverlay, setShowOverlay] = useState(false)
   const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
+  const [zoom, setZoom] = useState(14)
 
-  const mapRef = useRef<GoogleMap>()
+  const mapRef = useRef<GoogleMapsMap>()
 
-  // const center = useMemo<LatLngLiteral>(() => ({ lat: 43, lng: -80 }), [])
   const options = useMemo<MapOptions>(() => mapOptions, [])
 
-  const handleSetLocation = useCallback((location: Location) => {
-    if (location) {
-      setLocation(location)
-      mapRef.current?.panTo(location.position)
-    }
-  }, [])
+  const handleSetLocation = useCallback(
+    (location: Location) => {
+      if (location) {
+        setLocation(location)
+        mapRef.current?.panTo(location.position)
+        if (directions) {
+          setDirections(undefined)
+        }
+      }
+    },
+    [directions]
+  )
 
   useEffect(() => {
     if (location) {
@@ -44,10 +51,19 @@ export default function Map() {
     [showOverlay]
   )
 
-  const onLoad = useCallback((map) => (mapRef.current = map), [])
+  const onIdle = () => {
+    console.log('onIdle')
+    setZoom(mapRef.current?.getZoom()!)
+    setCenter(mapRef.current!.getCenter()!.toJSON())
+  }
+
+  const onLoad = useCallback((map: GoogleMapsMap) => {
+    mapRef.current = map
+  }, [])
+
   const randomLocations = useMemo(
-    () => generateRandomLocations(center),
-    [center]
+    () => generateRandomLocations(location?.position ?? defaultCenter),
+    [location]
   )
 
   return (
@@ -56,15 +72,18 @@ export default function Map() {
         handleSetLocation={handleSetLocation}
         directions={directions}
         location={location}
+        center={center}
+        zoom={zoom}
       />
 
       <div className={styles.map}>
         <GoogleMap
-          zoom={14}
+          onIdle={onIdle}
+          zoom={zoom}
           center={center}
-          mapContainerClassName={styles.mapContainer}
           options={options}
           onLoad={onLoad}
+          mapContainerClassName={styles.mapContainer}
         >
           {directions && <Directions directions={directions} />}
 
@@ -87,7 +106,14 @@ export default function Map() {
                 position={location.position}
                 description={location.description}
                 showOverlay={showOverlay}
-              />
+              >
+                <div
+                  className={styles.marker}
+                  style={{ display: showOverlay ? 'block' : 'none' }}
+                >
+                  <h2>{location.description}</h2>
+                </div>
+              </MarkerInfo>
 
               <Circles position={location.position} />
             </>
