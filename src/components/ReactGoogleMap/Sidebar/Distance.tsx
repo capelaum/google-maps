@@ -1,5 +1,5 @@
 import { DirectionsLeg } from 'types/googleMaps'
-import styles from '../styles.module.scss'
+import styles from './styles.module.scss'
 
 type DistanceProps = {
   leg: DirectionsLeg

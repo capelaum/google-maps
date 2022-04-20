@@ -1,8 +1,8 @@
 import { Button } from 'components/Button'
 import { DirectionsResult, LatLngLiteral, Location } from 'types/googleMaps'
-import styles from '../styles.module.scss'
 import { Distance } from './Distance'
 import { Places } from './Places'
+import styles from './styles.module.scss'
 
 interface SidebarProps {
   handleSetLocation: (location: Location) => void

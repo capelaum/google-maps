@@ -3,14 +3,14 @@ import {
   ComboboxInput,
   ComboboxList,
   ComboboxOption,
-  ComboboxPopover
+  ComboboxPopover,
 } from '@reach/combobox'
 import { Location } from 'types/googleMaps'
 import usePlacesAutocomplete, {
   getGeocode,
-  getLatLng
+  getLatLng,
 } from 'use-places-autocomplete'
-import styles from '../styles.module.scss'
+import styles from './styles.module.scss'
 
 type PlacesProps = {
   handleSetLocation: (location: Location) => void

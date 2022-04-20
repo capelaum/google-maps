@@ -1,5 +1,5 @@
 import { OverlayView } from '@react-google-maps/api'
-import styles from '../styles.module.scss'
+import styles from './styles.module.scss'
 
 /* interface MarkerInfoProps {
   position: LatLngLiteral
@@ -11,7 +11,7 @@ export function MarkerInfo({ position, description, showOverlay }) {
   return (
     <OverlayView position={position} mapPaneName={OverlayView.FLOAT_PANE}>
       <div
-        className={styles.marker}
+        className={styles.markerInfo}
         style={{ display: showOverlay ? 'block' : 'none' }}
       >
         <h2>{description}</h2>

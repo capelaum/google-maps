@@ -79,23 +79,21 @@ export default function Map() {
         zoom={zoom}
       />
 
-      <div className={styles.map}>
-        <GoogleMap
-          onClick={handleMapClick}
-          onIdle={onIdle}
-          zoom={zoom}
-          center={defaultCenter}
-          options={options}
-          onLoad={onLoad}
-          mapContainerClassName={styles.mapContainer}
-        >
-          {directions && <Directions directions={directions} />}
+      <GoogleMap
+        onClick={handleMapClick}
+        onIdle={onIdle}
+        zoom={zoom}
+        center={defaultCenter}
+        options={options}
+        onLoad={onLoad}
+        mapContainerClassName={styles.mapContainer}
+      >
+        {directions && <Directions directions={directions} />}
 
-          {location && (
-            <MarkerLocation location={location} setDirections={setDirections} />
-          )}
-        </GoogleMap>
-      </div>
+        {location && (
+          <MarkerLocation location={location} setDirections={setDirections} />
+        )}
+      </GoogleMap>
     </div>
   )
 }
