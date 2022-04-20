@@ -5,6 +5,7 @@ import {
   GoogleMapsMap,
   LatLngLiteral,
   Location,
+  MapMouseEvent,
   MapOptions,
 } from 'types/googleMaps'
 import { fetchDirections, generateRandomLocations } from 'utils/functions'
@@ -17,15 +18,30 @@ import { Sidebar } from './Sidebar'
 import styles from './styles.module.scss'
 
 export default function Map() {
+  const [zoom, setZoom] = useState(14)
+  const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
   const [directions, setDirections] = useState<DirectionsResult>()
   const [location, setLocation] = useState<Location>()
   const [showOverlay, setShowOverlay] = useState(false)
-  const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
-  const [zoom, setZoom] = useState(14)
 
   const mapRef = useRef<GoogleMapsMap>()
 
   const options = useMemo<MapOptions>(() => mapOptions, [])
+
+  useEffect(() => {
+    if (location) {
+      setCenter(location.position)
+    }
+  }, [location])
+
+  const handleMapClick = ({ latLng }: MapMouseEvent) => {
+    setDirections(undefined)
+
+    setLocation({
+      position: { lat: latLng!.lat(), lng: latLng!.lng() },
+      description: 'Local',
+    })
+  }
 
   const handleSetLocation = useCallback(
     (location: Location) => {
@@ -41,19 +57,22 @@ export default function Map() {
     [directions]
   )
 
-  useEffect(() => {
-    if (location) {
-      setCenter(location.position)
-    }
-  }, [location])
+  const clearLocation = useCallback(() => {
+    setLocation(undefined)
+  }, [])
 
   const toggleOverlay = useCallback(
     () => setShowOverlay(!showOverlay),
     [showOverlay]
   )
 
+  const randomLocations = useMemo(
+    () => generateRandomLocations(location?.position ?? defaultCenter),
+    [location]
+  )
+
   const onIdle = useCallback(() => {
-    console.log('onIdle')
+    // console.log('onIdle')
 
     setZoom(mapRef.current!.getZoom()!)
     setCenter(mapRef.current!.getCenter()!.toJSON())
@@ -63,15 +82,11 @@ export default function Map() {
     mapRef.current = map
   }, [])
 
-  const randomLocations = useMemo(
-    () => generateRandomLocations(location?.position ?? defaultCenter),
-    [location]
-  )
-
   return (
     <div className={styles.container}>
       <Sidebar
         handleSetLocation={handleSetLocation}
+        clearLocation={clearLocation}
         directions={directions}
         location={location}
         center={center}
@@ -80,6 +95,7 @@ export default function Map() {
 
       <div className={styles.map}>
         <GoogleMap
+          onClick={handleMapClick}
           onIdle={onIdle}
           zoom={zoom}
           center={defaultCenter}

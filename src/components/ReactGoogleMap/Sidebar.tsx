@@ -6,6 +6,7 @@ import styles from './styles.module.scss'
 
 interface SidebarProps {
   handleSetLocation: (location: Location) => void
+  clearLocation: () => void
   directions: DirectionsResult | undefined
   location: Location | undefined
   zoom: number
@@ -14,6 +15,7 @@ interface SidebarProps {
 
 export function Sidebar({
   handleSetLocation,
+  clearLocation,
   directions,
   location,
   center,
@@ -46,7 +48,11 @@ export function Sidebar({
         </div>
       </div>
 
-      <Button className={styles.buttonContainer} href="/">
+      <Button onClick={clearLocation} className={styles.buttonClear}>
+        Clear location
+      </Button>
+
+      <Button className={styles.buttonBack} href="/">
         Voltar
       </Button>
     </div>
