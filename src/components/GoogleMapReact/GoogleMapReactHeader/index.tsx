@@ -1,5 +1,5 @@
-import { Button } from 'components/Button'
-import { Header } from 'components/Header'
+import { Button } from 'components/Shared/Button'
+import { Header } from 'components/Shared/Header'
 import { NaturalEvent } from 'types/event'
 import styles from './styles.module.scss'
 

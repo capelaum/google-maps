@@ -1,6 +1,6 @@
 import { useJsApiLoader } from '@react-google-maps/api'
-import { Loader } from 'components/Loader'
 import Map from 'components/ReactGoogleMap/Map'
+import { Loader } from 'components/Shared/Loader'
 import Head from 'next/head'
 
 export default function ReactGoogleMaps() {

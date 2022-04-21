@@ -1,4 +1,4 @@
-import { Button } from 'components/Button'
+import { Button } from 'components/Shared/Button'
 import { LatLngLiteral } from 'types/googleMaps'
 import styles from './styles.module.scss'
 

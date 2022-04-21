@@ -1,4 +1,4 @@
-import { Button } from 'components/Button'
+import { Button } from 'components/Shared/Button'
 import { DirectionsResult, LatLngLiteral } from 'types/googleMaps'
 import { Distance } from './Distance'
 import { Places } from './Places'
@@ -28,7 +28,7 @@ export function Sidebar({
         handleSetClickedPos={handleSetClickedPos}
       />
 
-      {!clickedPos && <p>Digite o seu destino</p>}
+      {!clickedPos && <p>Busque um local</p>}
 
       {directions && <Distance leg={directions.routes[0].legs[0]} />}
 
@@ -38,6 +38,10 @@ export function Sidebar({
             <h2>Localização</h2>
             <p>Latitude: {clickedPos?.lat.toFixed(3)}</p>
             <p>Longitude: {clickedPos?.lng.toFixed(3)}</p>
+
+            <Button onClick={clearLocation} className={styles.buttonClear}>
+              Limpar Local
+            </Button>
           </>
         )}
 
@@ -50,10 +54,6 @@ export function Sidebar({
           <p>Zoom: {zoom.toFixed(3)}</p>
         </div>
       </div>
-
-      <Button onClick={clearLocation} className={styles.buttonClear}>
-        Clear location
-      </Button>
 
       <Button className={styles.buttonBack} href="/">
         Voltar
