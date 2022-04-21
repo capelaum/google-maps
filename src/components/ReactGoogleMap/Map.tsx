@@ -1,5 +1,6 @@
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { FiExternalLink } from 'react-icons/fi'
 import {
   DirectionsResult,
   GoogleMapsMap,
@@ -11,7 +12,7 @@ import {
 import { defaultCenter, mapOptions } from 'utils/options'
 import { CurrentLocation } from './CurrentLocation'
 import { Directions } from './Directions'
-import { MarkerLocation } from './Marker'
+import { MarkerInfo, MarkerList } from './Marker'
 import { Sidebar } from './Sidebar'
 import styles from './styles.module.scss'
 
@@ -21,6 +22,8 @@ export default function Map() {
   const [directions, setDirections] = useState<DirectionsResult | null>(null)
 
   const [clickedPos, setClickedPos] = useState<LatLngLiteral | null>(null)
+  const [place, setPlace] = useState<string | null>(null)
+
   const [selectedMarker, setSelectedMarker] = useState<MarkerType | null>(null)
 
   const [currentLocation, setCurrentLocation] =
@@ -44,24 +47,6 @@ export default function Map() {
     setClickedPos({ lat: latLng!.lat(), lng: latLng!.lng() })
   }
 
-  /* const handleSetLocation = useCallback(
-    (location: Location) => {
-      if (location) {
-        setLocation(location)
-        mapRef.current?.panTo(location.position)
-
-        if (directions) {
-          setDirections(undefined)
-        }
-      }
-    },
-    [directions]
-  ) */
-
-  const onMarkerClick = (marker: MarkerType) => {
-    setSelectedMarker(marker)
-  }
-
   const handleSetClickedPos = (position: LatLngLiteral) => {
     setClickedPos(position)
   }
@@ -69,6 +54,8 @@ export default function Map() {
   const clearLocation = useCallback(() => {
     setClickedPos(null)
     setDirections(null)
+    setSelectedMarker(null)
+    setPlace(null)
   }, [])
 
   const onIdle = useCallback(() => {
@@ -109,6 +96,8 @@ export default function Map() {
         clickedPos={clickedPos}
         center={currentCenter}
         zoom={zoom}
+        place={place}
+        setPlace={setPlace}
       />
 
       <CurrentLocation moveToCurrentLocation={moveToCurrentLocation} />
@@ -133,11 +122,35 @@ export default function Map() {
 
         {directions && <Directions directions={directions} />}
 
+        {clickedPos && <Marker position={clickedPos} />}
+
         {clickedPos && (
-          <MarkerLocation
+          <MarkerList
             clickedPos={clickedPos}
             setDirections={setDirections}
+            setSelectedMarker={setSelectedMarker}
           />
+        )}
+
+        {selectedMarker && (
+          <MarkerInfo
+            position={selectedMarker.location}
+            onCloseClick={() => setSelectedMarker(null)}
+          >
+            <p>{selectedMarker.name}</p>
+            <p>{selectedMarker.address}</p>
+            {selectedMarker.website && (
+              <p>
+                <a
+                  href={selectedMarker.website}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {selectedMarker.website} <FiExternalLink size={12} />
+                </a>
+              </p>
+            )}
+          </MarkerInfo>
         )}
       </GoogleMap>
     </div>

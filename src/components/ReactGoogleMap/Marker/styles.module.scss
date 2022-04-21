@@ -1,12 +1,7 @@
 @import 'styles/settings/__settings';
 
 .markerInfo {
-  padding: 0.5rem;
-
-  width: 200px;
-
-  border-radius: 5px;
-
+  max-width: 300px;
   background-color: $color-white;
   color: $color-black;
 }

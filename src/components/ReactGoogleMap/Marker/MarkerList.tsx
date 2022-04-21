@@ -1,15 +1,22 @@
 import { Marker, MarkerClusterer } from '@react-google-maps/api'
 import { useCallback, useMemo } from 'react'
-import { DirectionsResult, LatLngLiteral } from 'types/googleMaps'
+import { useQuery } from 'react-query'
+import { fetchNearbyPlaces } from 'services/api'
+import { DirectionsResult, LatLngLiteral, MarkerType } from 'types/googleMaps'
 import { fetchDirections, generateRandomLocations } from 'utils/functions'
 import { defaultCenter } from 'utils/options'
 
 interface MarkerListProps {
-  clickedPos: LatLngLiteral | null
+  clickedPos: LatLngLiteral
   setDirections: (directions: DirectionsResult) => void
+  setSelectedMarker: (marker: MarkerType | null) => void
 }
 
-export function MarkerList({ clickedPos, setDirections }: MarkerListProps) {
+export function MarkerList({
+  clickedPos,
+  setDirections,
+  setSelectedMarker,
+}: MarkerListProps) {
   const handleFetchDirections = useCallback(
     async (position: LatLngLiteral) => {
       if (!clickedPos) return null
@@ -25,15 +32,46 @@ export function MarkerList({ clickedPos, setDirections }: MarkerListProps) {
     [clickedPos]
   )
 
+  const {
+    data: nearbyPositions,
+    isLoading: isLoadingNearbyPositions,
+    isError: isErrorNearbyPositions,
+  } = useQuery(
+    [clickedPos.lat, clickedPos.lng],
+    () => {
+      return fetchNearbyPlaces(clickedPos.lat, clickedPos.lng)
+    },
+    {
+      enabled: clickedPos ? true : false,
+      refetchOnWindowFocus: false,
+    }
+  )
+
+  const handleMarkerClick = useCallback(
+    async (marker: MarkerType) => {
+      setSelectedMarker(marker)
+      await handleFetchDirections(marker.location)
+    },
+    [handleFetchDirections, setSelectedMarker]
+  )
+
+  if (isLoadingNearbyPositions) return null
+
   return (
     <MarkerClusterer>
       {(clusterer) =>
-        randomLocations.map((position) => (
+        nearbyPositions?.map((marker) => (
           <Marker
-            key={position.lat}
-            position={position}
+            key={marker.id}
+            position={marker.location}
+            onClick={() => handleMarkerClick(marker)}
             clusterer={clusterer}
-            onClick={() => handleFetchDirections(position)}
+            icon={{
+              url: '/marker.svg',
+              scaledSize: new google.maps.Size(32, 32),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(16, 16),
+            }}
           />
         ))
       }

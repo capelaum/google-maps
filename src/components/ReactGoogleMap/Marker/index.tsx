@@ -1,5 +1,5 @@
+import { MarkerCircles } from './MarkerCircles'
 import { MarkerInfo } from './MarkerInfo'
 import { MarkerList } from './MarkerList'
-import { MarkerLocation } from './MarkerLocation'
 
-export { MarkerLocation, MarkerList, MarkerInfo }
+export { MarkerList, MarkerInfo, MarkerCircles }

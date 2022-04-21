@@ -15,11 +15,11 @@ import { defaultCenter } from 'utils/options'
 import styles from './styles.module.scss'
 
 type PlacesProps = {
-  clickedPos: LatLngLiteral | null
   handleSetClickedPos: (pos: LatLngLiteral) => void
+  setPlace: (place: string) => void
 }
 
-export function Places({ clickedPos, handleSetClickedPos }: PlacesProps) {
+export function Places({ handleSetClickedPos, setPlace }: PlacesProps) {
   const defaultBounds = {
     north: defaultCenter.lat + 0.1,
     south: defaultCenter.lat - 0.1,
@@ -43,16 +43,15 @@ export function Places({ clickedPos, handleSetClickedPos }: PlacesProps) {
   } = usePlacesAutocomplete({
     requestOptions,
   })
-  console.log('🚀 ~ data', data)
 
   const handleSelect = async (address: string) => {
-    console.log('🚀 ~ address', address)
     setValue(address, false)
+    setPlace(address)
+
     clearSuggestions()
 
     const results = await getGeocode({ address })
     const position = await getLatLng(results[0])
-    console.log('🚀 ~ position', position)
 
     handleSetClickedPos(position)
   }
@@ -81,7 +80,7 @@ export function Places({ clickedPos, handleSetClickedPos }: PlacesProps) {
               }) => (
                 <ComboboxOption
                   key={place_id}
-                  value={main_text}
+                  value={description}
                   className={styles.comboboxOption}
                 >
                   <strong>{main_text}</strong> <small>{secondary_text}</small>
