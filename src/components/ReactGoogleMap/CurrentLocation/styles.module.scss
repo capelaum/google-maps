@@ -1,0 +1,15 @@
+@import 'styles/settings/__settings';
+
+.button {
+  position: absolute;
+  z-index: 2;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+
+  background-color: $color-secondary;
+  color: $color-white;
+
+  border: none;
+  border-radius: 5px;
+}

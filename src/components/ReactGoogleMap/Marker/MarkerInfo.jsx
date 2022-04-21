@@ -1,4 +1,4 @@
-import { OverlayView } from '@react-google-maps/api'
+import { InfoWindow } from '@react-google-maps/api'
 import styles from './styles.module.scss'
 
 /* interface MarkerInfoProps {
@@ -7,15 +7,12 @@ import styles from './styles.module.scss'
   showOverlay: boolean
 } */
 
-export function MarkerInfo({ position, description, showOverlay }) {
+export function MarkerInfo({ position, description = null }) {
   return (
-    <OverlayView position={position} mapPaneName={OverlayView.FLOAT_PANE}>
-      <div
-        className={styles.markerInfo}
-        style={{ display: showOverlay ? 'block' : 'none' }}
-      >
-        <h2>{description}</h2>
+    <InfoWindow position={position}>
+      <div className={styles.markerInfo}>
+        {description && <h2>{description}</h2>}
       </div>
-    </OverlayView>
+    </InfoWindow>
   )
 }

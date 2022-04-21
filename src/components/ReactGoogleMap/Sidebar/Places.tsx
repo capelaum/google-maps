@@ -6,7 +6,7 @@ import {
   ComboboxPopover,
 } from '@reach/combobox'
 import { ChangeEvent } from 'react'
-import { Location } from 'types/googleMaps'
+import { LatLngLiteral } from 'types/googleMaps'
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -15,11 +15,11 @@ import { defaultCenter } from 'utils/options'
 import styles from './styles.module.scss'
 
 type PlacesProps = {
-  handleSetLocation: (location: Location) => void
-  location: Location | undefined
+  clickedPos: LatLngLiteral | null
+  handleSetClickedPos: (pos: LatLngLiteral) => void
 }
 
-export function Places({ handleSetLocation, location }: PlacesProps) {
+export function Places({ clickedPos, handleSetClickedPos }: PlacesProps) {
   const defaultBounds = {
     north: defaultCenter.lat + 0.1,
     south: defaultCenter.lat - 0.1,
@@ -43,17 +43,18 @@ export function Places({ handleSetLocation, location }: PlacesProps) {
   } = usePlacesAutocomplete({
     requestOptions,
   })
-
-  // console.log('🚀 ~ data', data)
+  console.log('🚀 ~ data', data)
 
   const handleSelect = async (address: string) => {
+    console.log('🚀 ~ address', address)
     setValue(address, false)
     clearSuggestions()
 
     const results = await getGeocode({ address })
     const position = await getLatLng(results[0])
+    console.log('🚀 ~ position', position)
 
-    handleSetLocation({ position, description: address })
+    handleSetClickedPos(position)
   }
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +81,7 @@ export function Places({ handleSetLocation, location }: PlacesProps) {
               }) => (
                 <ComboboxOption
                   key={place_id}
-                  value={description}
+                  value={main_text}
                   className={styles.comboboxOption}
                 >
                   <strong>{main_text}</strong> <small>{secondary_text}</small>
@@ -92,15 +93,3 @@ export function Places({ handleSetLocation, location }: PlacesProps) {
     </Combobox>
   )
 }
-
-/*
-  Types
-
-  point_of_interest
-  establishment
-  university
-  school
-  real_estate_agency
-
-
-*/

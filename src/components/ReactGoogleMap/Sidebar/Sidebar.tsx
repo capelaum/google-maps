@@ -1,42 +1,43 @@
 import { Button } from 'components/Button'
-import { DirectionsResult, LatLngLiteral, Location } from 'types/googleMaps'
+import { DirectionsResult, LatLngLiteral } from 'types/googleMaps'
 import { Distance } from './Distance'
 import { Places } from './Places'
 import styles from './styles.module.scss'
 
 interface SidebarProps {
-  handleSetLocation: (location: Location) => void
   clearLocation: () => void
-  directions: DirectionsResult | undefined
-  location: Location | undefined
+  handleSetClickedPos: (pos: LatLngLiteral) => void
+  directions: DirectionsResult | null
+  clickedPos: LatLngLiteral | null
   zoom: number
   center: LatLngLiteral
 }
 
 export function Sidebar({
-  handleSetLocation,
   clearLocation,
+  handleSetClickedPos,
   directions,
-  location,
+  clickedPos,
   center,
   zoom,
 }: SidebarProps) {
   return (
     <div className={styles.sidebar}>
-      <h1>Trajeto</h1>
+      <Places
+        clickedPos={clickedPos}
+        handleSetClickedPos={handleSetClickedPos}
+      />
 
-      <Places handleSetLocation={handleSetLocation} location={location} />
-
-      {!location && <p>Digite o seu destino</p>}
+      {!clickedPos && <p>Digite o seu destino</p>}
 
       {directions && <Distance leg={directions.routes[0].legs[0]} />}
 
       <div className={styles.locationInfo}>
-        {location && (
+        {clickedPos && (
           <>
             <h2>Localização</h2>
-            <p>Latitude: {location?.position.lat}</p>
-            <p>Longitude: {location?.position.lng}</p>
+            <p>Latitude: {clickedPos?.lat.toFixed(3)}</p>
+            <p>Longitude: {clickedPos?.lng.toFixed(3)}</p>
           </>
         )}
 
@@ -46,7 +47,7 @@ export function Sidebar({
           <h2>Centro</h2>
           <p>Latitude: {center.lat.toFixed(3)}</p>
           <p>Longitude: {center.lng.toFixed(3)}</p>
-          <p>Zoom: {zoom}</p>
+          <p>Zoom: {zoom.toFixed(3)}</p>
         </div>
       </div>
 

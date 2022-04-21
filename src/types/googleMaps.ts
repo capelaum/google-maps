@@ -9,9 +9,15 @@ export type MapOptions = google.maps.MapOptions
 export type MapMouseEvent = google.maps.MapMouseEvent
 
 export type MarkerOptions = google.maps.MarkerOptions
-export type MarkerType = google.maps.Marker
+export type GoogleMapsMarker = google.maps.Marker
 
-export type Location = {
-  position: LatLngLiteral
-  description: string
+export type MarkerType = {
+  id: string
+  name: string
+  address: string
+  location: LatLngLiteral
+  phone_number: string
+  website: string
+  types: string[]
+  distance: number
 }

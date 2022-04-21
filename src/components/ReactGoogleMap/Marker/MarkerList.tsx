@@ -1,39 +1,34 @@
 import { Marker, MarkerClusterer } from '@react-google-maps/api'
-import { useCallback } from 'react'
-import { DirectionsResult, LatLngLiteral, Location } from 'types/googleMaps'
+import { useCallback, useMemo } from 'react'
+import { DirectionsResult, LatLngLiteral } from 'types/googleMaps'
+import { fetchDirections, generateRandomLocations } from 'utils/functions'
+import { defaultCenter } from 'utils/options'
 
 interface MarkerListProps {
-  locations: LatLngLiteral[]
-  location: Location
-  fetchDirections: (
-    position: LatLngLiteral,
-    destination: LatLngLiteral
-  ) => Promise<DirectionsResult | undefined>
+  clickedPos: LatLngLiteral | null
   setDirections: (directions: DirectionsResult) => void
 }
 
-export function MarkerList({
-  locations,
-  location,
-  fetchDirections,
-  setDirections,
-}: MarkerListProps) {
+export function MarkerList({ clickedPos, setDirections }: MarkerListProps) {
   const handleFetchDirections = useCallback(
     async (position: LatLngLiteral) => {
-      const directionsResult = await fetchDirections(
-        position,
-        location.position
-      )
+      if (!clickedPos) return null
+      const directionsResult = await fetchDirections(position, clickedPos)
 
       setDirections(directionsResult!)
     },
-    [fetchDirections, location, setDirections]
+    [setDirections, clickedPos]
+  )
+
+  const randomLocations = useMemo(
+    () => generateRandomLocations(clickedPos ?? defaultCenter),
+    [clickedPos]
   )
 
   return (
     <MarkerClusterer>
       {(clusterer) =>
-        locations.map((position) => (
+        randomLocations.map((position) => (
           <Marker
             key={position.lat}
             position={position}

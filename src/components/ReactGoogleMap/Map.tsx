@@ -4,11 +4,12 @@ import {
   DirectionsResult,
   GoogleMapsMap,
   LatLngLiteral,
-  Location,
   MapMouseEvent,
   MapOptions,
+  MarkerType,
 } from 'types/googleMaps'
 import { defaultCenter, mapOptions } from 'utils/options'
+import { CurrentLocation } from './CurrentLocation'
 import { Directions } from './Directions'
 import { MarkerLocation } from './Marker'
 import { Sidebar } from './Sidebar'
@@ -17,33 +18,33 @@ import styles from './styles.module.scss'
 export default function Map() {
   const [zoom, setZoom] = useState(14)
   const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
+  const [directions, setDirections] = useState<DirectionsResult | null>(null)
+
+  const [clickedPos, setClickedPos] = useState<LatLngLiteral | null>(null)
+  const [selectedMarker, setSelectedMarker] = useState<MarkerType | null>(null)
+
   const [currentLocation, setCurrentLocation] =
     useState<LatLngLiteral>(defaultCenter)
   const [currentCenter, setCurrentCenter] =
     useState<LatLngLiteral>(defaultCenter)
-  const [directions, setDirections] = useState<DirectionsResult>()
-  const [location, setLocation] = useState<Location>()
 
   const mapRef = useRef<GoogleMapsMap>()
 
   const options = useMemo<MapOptions>(() => mapOptions, [])
 
   useEffect(() => {
-    if (location) {
-      setCenter(location.position)
+    if (clickedPos) {
+      setCenter(clickedPos)
     }
-  }, [location])
+  }, [clickedPos])
 
   const handleMapClick = ({ latLng }: MapMouseEvent) => {
-    setDirections(undefined)
+    setDirections(null)
 
-    setLocation({
-      position: { lat: latLng!.lat(), lng: latLng!.lng() },
-      description: 'Local',
-    })
+    setClickedPos({ lat: latLng!.lat(), lng: latLng!.lng() })
   }
 
-  const handleSetLocation = useCallback(
+  /* const handleSetLocation = useCallback(
     (location: Location) => {
       if (location) {
         setLocation(location)
@@ -55,11 +56,19 @@ export default function Map() {
       }
     },
     [directions]
-  )
+  ) */
+
+  const onMarkerClick = (marker: MarkerType) => {
+    setSelectedMarker(marker)
+  }
+
+  const handleSetClickedPos = (position: LatLngLiteral) => {
+    setClickedPos(position)
+  }
 
   const clearLocation = useCallback(() => {
-    setLocation(undefined)
-    setDirections(undefined)
+    setClickedPos(null)
+    setDirections(null)
   }, [])
 
   const onIdle = useCallback(() => {
@@ -80,24 +89,38 @@ export default function Map() {
     )
   }, [])
 
+  const onUnmount = useCallback(() => {
+    mapRef.current = undefined
+  }, [])
+
+  const moveToCurrentLocation = useCallback((position: LatLngLiteral) => {
+    if (!mapRef.current) return
+
+    mapRef.current.panTo({ lat: position.lat, lng: position.lng })
+    mapRef.current.setZoom(14)
+  }, [])
+
   return (
     <div className={styles.container}>
       <Sidebar
-        handleSetLocation={handleSetLocation}
+        handleSetClickedPos={handleSetClickedPos}
         clearLocation={clearLocation}
         directions={directions}
-        location={location}
+        clickedPos={clickedPos}
         center={currentCenter}
         zoom={zoom}
       />
 
+      <CurrentLocation moveToCurrentLocation={moveToCurrentLocation} />
+
       <GoogleMap
-        onClick={handleMapClick}
-        onIdle={onIdle}
         zoom={zoom}
         center={center}
         options={options}
+        onIdle={onIdle}
         onLoad={onMapLoad}
+        onUnmount={onUnmount}
+        onClick={handleMapClick}
         mapContainerClassName={styles.mapContainer}
       >
         <Marker
@@ -110,8 +133,11 @@ export default function Map() {
 
         {directions && <Directions directions={directions} />}
 
-        {location && (
-          <MarkerLocation location={location} setDirections={setDirections} />
+        {clickedPos && (
+          <MarkerLocation
+            clickedPos={clickedPos}
+            setDirections={setDirections}
+          />
         )}
       </GoogleMap>
     </div>
