@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { BiCurrentLocation } from 'react-icons/bi'
+import { BallTriangle } from 'react-loader-spinner'
 import { LatLngLiteral } from 'types/googleMaps'
 import styles from './styles.module.scss'
 
@@ -29,8 +31,18 @@ export function CurrentLocation({
       className={styles.button}
       disabled={disabled}
       onClick={handleOnClick}
+      title="Localização atual"
     >
-      {disabled ? 'Loading...' : 'Get Current Location'}
+      {disabled ? (
+        <BallTriangle
+          width={24}
+          height={24}
+          color="white"
+          ariaLabel="loading-indicator"
+        />
+      ) : (
+        <BiCurrentLocation size={24} />
+      )}
     </button>
   )
 }

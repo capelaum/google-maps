@@ -1,6 +1,10 @@
 @import 'styles/settings/__settings';
 
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   position: absolute;
   z-index: 2;
   top: 20px;
