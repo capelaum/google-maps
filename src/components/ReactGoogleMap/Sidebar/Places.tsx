@@ -5,34 +5,19 @@ import {
   ComboboxOption,
   ComboboxPopover,
 } from '@reach/combobox'
+import { useMap } from 'contexts/mapContext'
 import { ChangeEvent } from 'react'
-import { LatLngLiteral } from 'types/googleMaps'
+import { MdOutlineCancel } from 'react-icons/md'
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete'
-import { defaultCenter } from 'utils/options'
+import { requestOptions } from 'utils/options'
 import styles from './styles.module.scss'
 
-type PlacesProps = {
-  handleSetClickedPos: (pos: LatLngLiteral) => void
-  setPlace: (place: string) => void
-}
-
-export function Places({ handleSetClickedPos, setPlace }: PlacesProps) {
-  const defaultBounds = {
-    north: defaultCenter.lat + 0.1,
-    south: defaultCenter.lat - 0.1,
-    east: defaultCenter.lng + 0.1,
-    west: defaultCenter.lng - 0.1,
-  }
-
-  const requestOptions = {
-    types: ['university', 'school'],
-    componentRestrictions: { country: 'br' },
-    bounds: defaultBounds,
-    fields: ['address_components', 'geometry', 'icon', 'name'],
-  }
+export function Places() {
+  const { setPlace, setClickedPos, setDirections, moveToCurrentLocation } =
+    useMap()
 
   const {
     ready,
@@ -53,22 +38,32 @@ export function Places({ handleSetClickedPos, setPlace }: PlacesProps) {
     const results = await getGeocode({ address })
     const position = await getLatLng(results[0])
 
-    handleSetClickedPos(position)
+    setClickedPos(position)
+    setDirections(null)
+    moveToCurrentLocation(position)
   }
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
   }
 
+  const clearPlace = () => {
+    setValue('')
+    setPlace(null)
+  }
+
   return (
     <Combobox onSelect={handleSelect}>
-      <ComboboxInput
-        value={value}
-        disabled={!ready}
-        onChange={handleInput}
-        className={styles.comboboxInput}
-        placeholder="Buscar localização"
-      />
+      <div className={styles.placesInputContainer}>
+        <ComboboxInput
+          value={value}
+          disabled={!ready}
+          onChange={handleInput}
+          className={styles.comboboxInput}
+          placeholder="Buscar localização"
+        />
+        <MdOutlineCancel color="#f231a5" onClick={clearPlace} />
+      </div>
       <ComboboxPopover>
         <ComboboxList className={styles.comboboxList}>
           {status === 'OK' &&

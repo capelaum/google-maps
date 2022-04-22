@@ -42,3 +42,19 @@ export const farOptions = {
   strokeColor: '#FF5252',
   fillColor: '#FF5252',
 }
+
+// Places
+
+export const defaultBounds = {
+  north: defaultCenter.lat + 0.1,
+  south: defaultCenter.lat - 0.1,
+  east: defaultCenter.lng + 0.1,
+  west: defaultCenter.lng - 0.1,
+}
+
+export const requestOptions = {
+  types: ['university', 'school'],
+  componentRestrictions: { country: 'br' },
+  bounds: defaultBounds,
+  fields: ['address_components', 'geometry', 'icon', 'name'],
+}
