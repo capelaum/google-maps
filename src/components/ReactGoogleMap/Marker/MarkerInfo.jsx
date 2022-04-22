@@ -1,9 +1,15 @@
 import { InfoWindow } from '@react-google-maps/api'
+import { useMap } from 'contexts/mapContext'
 import styles from './styles.module.scss'
 
-export function MarkerInfo({ position, children, onCloseClick }) {
+export function MarkerInfo({ children }) {
+  const { selectedMarker, setSelectedMarker } = useMap()
+
   return (
-    <InfoWindow position={position} onCloseClick={onCloseClick}>
+    <InfoWindow
+      position={selectedMarker.location}
+      onCloseClick={() => setSelectedMarker(null)}
+    >
       <div className={styles.markerInfo}>{children}</div>
     </InfoWindow>
   )

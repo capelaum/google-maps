@@ -26,6 +26,29 @@
   margin-bottom: 1rem;
 }
 
+.placesInputContainer {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // border: 1px solid red;
+
+  svg {
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+    background-color: $color-blue-700;
+    border-radius: 50%;
+    filter: brightness(1.1);
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+}
+
 .comboboxInput {
   width: 100%;
   padding: 0.5rem;
