@@ -1,34 +1,16 @@
 import { Button } from 'components/Shared/Button'
-import { DirectionsResult, LatLngLiteral } from 'types/googleMaps'
+import { useMap } from 'contexts/mapContext'
 import { Distance } from './Distance'
 import { Places } from './Places'
 import styles from './styles.module.scss'
 
-interface SidebarProps {
-  clearLocation: () => void
-  handleSetClickedPos: (pos: LatLngLiteral) => void
-  setPlace: (place: string) => void
-  place: string | null
+export function Sidebar() {
+  const { currentCenter, zoom, place, clickedPos, directions, clearLocation } =
+    useMap()
 
-  directions: DirectionsResult | null
-  clickedPos: LatLngLiteral | null
-  zoom: number
-  center: LatLngLiteral
-}
-
-export function Sidebar({
-  clearLocation,
-  handleSetClickedPos,
-  setPlace,
-  place,
-  directions,
-  clickedPos,
-  center,
-  zoom,
-}: SidebarProps) {
   return (
     <div className={styles.sidebar}>
-      <Places handleSetClickedPos={handleSetClickedPos} setPlace={setPlace} />
+      <Places />
 
       {!clickedPos && <p>Busque um local</p>}
 
@@ -57,8 +39,8 @@ export function Sidebar({
 
       <div>
         <h2>Centro</h2>
-        <p>Latitude: {center.lat.toFixed(3)}</p>
-        <p>Longitude: {center.lng.toFixed(3)}</p>
+        <p>Latitude: {currentCenter.lat.toFixed(3)}</p>
+        <p>Longitude: {currentCenter.lng.toFixed(3)}</p>
         <p>Zoom: {zoom.toFixed(3)}</p>
       </div>
 

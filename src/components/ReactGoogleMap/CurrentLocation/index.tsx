@@ -1,3 +1,4 @@
+import { useMap } from 'contexts/mapContext'
 import { useState } from 'react'
 import { BiCurrentLocation } from 'react-icons/bi'
 import { BallTriangle } from 'react-loader-spinner'
@@ -8,9 +9,8 @@ interface CurrentLocationProps {
   moveToCurrentLocation: (position: LatLngLiteral) => void
 }
 
-export function CurrentLocation({
-  moveToCurrentLocation,
-}: CurrentLocationProps) {
+export function CurrentLocation() {
+  const { moveToCurrentLocation } = useMap()
   const [disabled, setDisabled] = useState(false)
 
   const handleOnClick = () => {

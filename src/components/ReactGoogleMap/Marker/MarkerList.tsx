@@ -1,22 +1,14 @@
 import { Marker, MarkerClusterer } from '@react-google-maps/api'
-import { useCallback, useMemo } from 'react'
+import { useMap } from 'contexts/mapContext'
+import { useCallback } from 'react'
 import { useQuery } from 'react-query'
 import { fetchNearbyPlaces } from 'services/api'
-import { DirectionsResult, LatLngLiteral, MarkerType } from 'types/googleMaps'
-import { fetchDirections, generateRandomLocations } from 'utils/functions'
-import { defaultCenter } from 'utils/options'
+import { LatLngLiteral, MarkerType } from 'types/googleMaps'
+import { fetchDirections } from 'utils/functions'
 
-interface MarkerListProps {
-  clickedPos: LatLngLiteral
-  setDirections: (directions: DirectionsResult) => void
-  setSelectedMarker: (marker: MarkerType | null) => void
-}
+export function MarkerList() {
+  const { clickedPos, setDirections, setSelectedMarker } = useMap()
 
-export function MarkerList({
-  clickedPos,
-  setDirections,
-  setSelectedMarker,
-}: MarkerListProps) {
   const handleFetchDirections = useCallback(
     async (position: LatLngLiteral) => {
       if (!clickedPos) return null
@@ -27,19 +19,14 @@ export function MarkerList({
     [setDirections, clickedPos]
   )
 
-  const randomLocations = useMemo(
-    () => generateRandomLocations(clickedPos ?? defaultCenter),
-    [clickedPos]
-  )
-
   const {
     data: nearbyPositions,
     isLoading: isLoadingNearbyPositions,
     isError: isErrorNearbyPositions,
   } = useQuery(
-    [clickedPos.lat, clickedPos.lng],
+    [clickedPos!.lat, clickedPos!.lng],
     () => {
-      return fetchNearbyPlaces(clickedPos.lat, clickedPos.lng)
+      return fetchNearbyPlaces(clickedPos!.lat, clickedPos!.lng)
     },
     {
       enabled: clickedPos ? true : false,

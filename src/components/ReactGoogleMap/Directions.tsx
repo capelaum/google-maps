@@ -1,14 +1,12 @@
 import { DirectionsRenderer } from '@react-google-maps/api'
-import { DirectionsResult } from 'types/googleMaps'
+import { useMap } from 'contexts/mapContext'
 
-interface DirectionsProps {
-  directions: DirectionsResult
-}
+export function Directions() {
+  const { directions } = useMap()
 
-export function Directions({ directions }: DirectionsProps) {
   return (
     <DirectionsRenderer
-      directions={directions}
+      directions={directions!}
       options={{
         polylineOptions: {
           zIndex: 50,
