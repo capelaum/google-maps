@@ -137,7 +137,9 @@ export default function Map() {
             position={selectedMarker.location}
             onCloseClick={() => setSelectedMarker(null)}
           >
-            <p>{selectedMarker.name}</p>
+            <p>
+              <strong>{selectedMarker.name}</strong>
+            </p>
             <p>{selectedMarker.address}</p>
             {selectedMarker.website && (
               <p>
