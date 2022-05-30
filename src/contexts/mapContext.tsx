@@ -59,6 +59,7 @@ export function MapProvider({ children }: MapProviderProps) {
     useState<LatLngLiteral>(defaultCenter)
 
   const mapRef = useRef<GoogleMapsMap>()
+
   const options = useMemo<MapOptions>(() => mapOptions, [])
 
   const handleMapClick = ({ latLng }: MapMouseEvent) => {
